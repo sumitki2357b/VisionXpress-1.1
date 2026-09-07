@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisionXpress | Smart Maintenance Block Planning</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="toast-root"></div>
+  <section id="login-view" class="login-shell">
+    <div class="login-hero">
+      <div class="brand-mark">VX</div>
+      <div class="eyebrow">SMART RAIL MAINTENANCE PLANNING</div>
+      <h1>VisionXpress</h1>
+      <p>Coordinate maintenance requests, train schedules and safe block decisions from one local control desk.</p>
+      <div class="hero-points">
+        <span>Priority-aware</span><span>Conflict-safe</span><span>BDMS approval workflow</span>
+      </div>
+    </div>
+    <div class="login-card">
+      <div class="card-head">
+        <div>
+          <div class="eyebrow">SECURE DEMO ACCESS</div>
+          <h2>Sign in to your department</h2>
+        </div>
+        <span class="local-badge">LOCAL</span>
+      </div>
+      <form id="login-form">
+        <label>Department</label>
+        <select id="login-department" required>
+          <option value="TMS">TMS</option>
+          <option value="TDMS">TDMS</option>
+          <option value="SMMS">SMMS</option>
+          <option value="COA">COA</option>
+          <option value="BDMS">BDMS</option>
+        </select>
+        <label>User ID</label>
+        <input id="login-user" required placeholder="Department user ID" />
+        <label>Password</label>
+        <input id="login-password" type="password" required placeholder="Password" />
+        <button class="primary wide" type="submit">Sign in <span>↗</span></button>
+      </form>
+      <div class="demo-credentials">
+        <strong>Demo credentials</strong>
+        <span>Use the fixed IDs provided for your department.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="app-view" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><div class="brand-mark small">VX</div><div><strong>VisionXpress</strong><span>Control Desk</span></div></div>
+      <div class="user-box"><span class="avatar" id="user-avatar">TD</span><div><strong id="user-name">TDMS001</strong><span id="user-department">TDMS</span></div></div>
+      <nav id="nav-menu"></nav>
+      <div class="sidebar-bottom">
+        <div class="system-status"><span class="dot"></span> Local engine online</div>
+        <button id="logout-button" class="ghost wide">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div><div class="eyebrow" id="page-kicker">CONTROL CENTER</div><h2 id="page-title">Dashboard</h2></div>
+        <div class="top-actions"><div class="date-control"><label>Planning date</label><input id="planning-date" type="date" value="2026-09-01" /></div><button id="refresh-button" class="secondary">Refresh</button><button id="notify-button" class="icon-button">🔔<span id="notify-count" class="notif-count">0</span></button></div>
+      </header>
+      <div id="main-view"></div>
+    </main>
+  </section>
+
+  <div id="modal-root"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
