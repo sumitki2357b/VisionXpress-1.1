@@ -11,12 +11,22 @@
 
 <body>
 
-  <!-- Toast notifications -->
-  <div id="toast-root"></div>
+  <!-- Global theme button -->
+  <button
+    id="theme-toggle"
+    class="theme-toggle"
+    type="button"
+    aria-label="Toggle light and dark mode"
+  >
+    <span class="theme-icon">☾</span>
+    <span class="theme-text">Dark Mode</span>
+  </button>
 
-  <!-- =========================================================
-       LOGIN VIEW
-       ========================================================= -->
+
+  <!-- ======================================================
+       LOGIN
+       ====================================================== -->
+
   <section id="login-view" class="login-shell">
 
     <div class="login-page">
@@ -30,43 +40,51 @@
 
         <div class="brand-copy">
           <div class="brand-name">VisionXpress</div>
-          <div class="brand-subtitle">SMART RAIL MAINTENANCE PLANNING</div>
+          <div class="brand-subtitle">
+            SMART RAIL MAINTENANCE BLOCK PLANNING
+          </div>
         </div>
 
       </div>
 
 
-      <!-- MAIN LOGIN PANEL -->
+      <!-- LOGIN PANEL -->
       <div class="login-panel">
 
         <div class="login-panel-header">
 
           <div>
-            <div class="section-label">CONTROL DESK ACCESS</div>
 
-            <h1>Sign in to VisionXpress</h1>
+            <div class="section-label">
+              RAILWAY CONTROL DESK
+            </div>
+
+            <h1>
+              Department Login
+            </h1>
 
             <p>
-              Access the maintenance planning and block coordination system.
+              Access maintenance planning and block coordination services.
             </p>
+
           </div>
 
           <div class="local-status">
             <span class="status-dot"></span>
-            LOCAL
+            SYSTEM ONLINE
           </div>
 
         </div>
 
 
-        <!-- LOGIN FORM -->
         <form id="login-form">
 
           <!-- DEPARTMENT -->
+
           <div class="form-section">
 
             <label class="form-title">
-              Select Department / Block Type
+              Select Department
             </label>
 
             <div class="department-grid">
@@ -77,8 +95,11 @@
                 data-department="TMS"
               >
                 <span class="department-code">TMS</span>
-                <span class="department-name">Track Maintenance</span>
+                <span class="department-name">
+                  Track Maintenance
+                </span>
               </button>
+
 
               <button
                 type="button"
@@ -86,8 +107,11 @@
                 data-department="TDMS"
               >
                 <span class="department-code">TDMS</span>
-                <span class="department-name">Track & Development</span>
+                <span class="department-name">
+                  Track Development
+                </span>
               </button>
+
 
               <button
                 type="button"
@@ -95,8 +119,11 @@
                 data-department="SMMS"
               >
                 <span class="department-code">SMMS</span>
-                <span class="department-name">Signal & Telecom</span>
+                <span class="department-name">
+                  Signal & Telecom
+                </span>
               </button>
+
 
               <button
                 type="button"
@@ -104,8 +131,11 @@
                 data-department="COA"
               >
                 <span class="department-code">COA</span>
-                <span class="department-name">Control Office</span>
+                <span class="department-name">
+                  Control Office
+                </span>
               </button>
+
 
               <button
                 type="button"
@@ -113,17 +143,19 @@
                 data-department="BDMS"
               >
                 <span class="department-code">BDMS</span>
-                <span class="department-name">Block Approval</span>
+                <span class="department-name">
+                  Block Approval
+                </span>
               </button>
 
             </div>
 
-            <!--
-              Keep the original select ID.
-              app.js can continue reading #login-department exactly
-              as it did before.
-            -->
-            <select id="login-department" class="department-hidden-select">
+
+            <!-- KEEP ORIGINAL ID FOR app.js -->
+            <select
+              id="login-department"
+              class="department-hidden-select"
+            >
               <option value="TMS">TMS</option>
               <option value="TDMS">TDMS</option>
               <option value="SMMS">SMMS</option>
@@ -134,10 +166,13 @@
           </div>
 
 
-          <!-- USER ID -->
+          <!-- USER -->
+
           <div class="input-group">
 
-            <label for="login-user">User ID</label>
+            <label for="login-user">
+              User ID
+            </label>
 
             <input
               id="login-user"
@@ -150,9 +185,12 @@
 
 
           <!-- PASSWORD -->
+
           <div class="input-group">
 
-            <label for="login-password">Password</label>
+            <label for="login-password">
+              Password
+            </label>
 
             <input
               id="login-password"
@@ -165,7 +203,8 @@
           </div>
 
 
-          <!-- LOGIN BUTTON -->
+          <!-- SUBMIT -->
+
           <button
             class="primary wide login-submit"
             type="submit"
@@ -176,35 +215,20 @@
 
         </form>
 
-
-        <!-- DEMO INFORMATION -->
-        <div class="demo-information">
-
-          <div class="demo-icon">i</div>
-
-          <div>
-            <strong>Demo access</strong>
-
-            <p>
-              Use the fixed credentials provided for the selected department.
-            </p>
-          </div>
-
-        </div>
-
       </div>
 
 
       <!-- FOOTER -->
+
       <div class="login-footer">
 
         <span>VisionXpress</span>
 
-        <span class="footer-divider">|</span>
+        <span>|</span>
 
         <span>Smart Maintenance Block Planning</span>
 
-        <span class="footer-divider">|</span>
+        <span>|</span>
 
         <span>SIH 2026</span>
 
@@ -215,15 +239,17 @@
   </section>
 
 
-  <!-- =========================================================
-       APPLICATION VIEW
-       ========================================================= -->
+
+  <!-- ======================================================
+       APPLICATION
+       ====================================================== -->
+
   <section id="app-view" class="app-shell hidden">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
 
       <!-- BRAND -->
+
       <div class="sidebar-brand">
 
         <div class="brand-emblem small">
@@ -231,39 +257,70 @@
         </div>
 
         <div class="sidebar-brand-text">
-          <strong>VisionXpress</strong>
-          <span>Control Desk</span>
+
+          <strong>
+            VisionXpress
+          </strong>
+
+          <span>
+            Control Desk
+          </span>
+
         </div>
 
       </div>
 
 
       <!-- USER -->
+
       <div class="user-box">
 
-        <span class="avatar" id="user-avatar">TD</span>
+        <span
+          class="avatar"
+          id="user-avatar"
+        >
+          TD
+        </span>
 
         <div>
-          <strong id="user-name">TDMS001</strong>
-          <span id="user-department">TDMS</span>
+
+          <strong id="user-name">
+            TDMS001
+          </strong>
+
+          <span id="user-department">
+            TDMS
+          </span>
+
         </div>
 
       </div>
 
 
       <!-- NAVIGATION -->
+
       <nav id="nav-menu"></nav>
 
 
-      <!-- SIDEBAR BOTTOM -->
+      <!-- BOTTOM -->
+
       <div class="sidebar-bottom">
 
         <div class="system-status">
+
           <span class="dot"></span>
-          <span>Local engine online</span>
+
+          <span>
+            Local engine online
+          </span>
+
         </div>
 
-        <button id="logout-button" class="ghost wide">
+
+        <button
+          id="logout-button"
+          class="ghost wide"
+        >
           Sign out
         </button>
 
@@ -272,15 +329,19 @@
     </aside>
 
 
-    <!-- MAIN CONTENT -->
+
+    <!-- MAIN -->
+
     <main class="content">
 
-      <!-- TOP BAR -->
       <header class="topbar">
 
         <div class="topbar-heading">
 
-          <div class="eyebrow" id="page-kicker">
+          <div
+            class="eyebrow"
+            id="page-kicker"
+          >
             CONTROL CENTER
           </div>
 
@@ -321,25 +382,15 @@
             class="icon-button"
             aria-label="Notifications"
           >
-            <span class="bell-symbol">🔔</span>
+            🔔
+
             <span
               id="notify-count"
               class="notif-count"
             >
               0
             </span>
-          </button>
 
-
-          <!-- Theme control -->
-          <button
-            id="theme-toggle"
-            class="theme-button"
-            type="button"
-            aria-label="Switch theme"
-          >
-            <span class="theme-icon">☾</span>
-            <span class="theme-text">Dark</span>
           </button>
 
         </div>
@@ -347,7 +398,7 @@
       </header>
 
 
-      <!-- DYNAMIC APPLICATION CONTENT -->
+      <!-- APP CONTENT -->
       <div id="main-view"></div>
 
     </main>
@@ -356,38 +407,44 @@
 
 
   <!-- MODALS -->
+
   <div id="modal-root"></div>
 
 
-  <!-- =========================================================
-       THEME + DEPARTMENT UI
-       This does NOT touch the backend.
-       ========================================================= -->
-  <script>
+  <!-- TOASTS -->
 
-    /* ---------------------------------------------------------
-       Department block selection
-       Keeps #login-department compatible with existing app.js
-       --------------------------------------------------------- */
+  <div id="toast-root"></div>
+
+
+  <!-- ======================================================
+       UI-ONLY JAVASCRIPT
+       Does not touch backend.
+       ====================================================== -->
+
+  <script>
 
     document.addEventListener("DOMContentLoaded", function () {
 
-      const departmentButtons =
+      /* -----------------------------------------------
+         Department selection
+         ----------------------------------------------- */
+
+      const buttons =
         document.querySelectorAll(".department-option");
 
-      const departmentSelect =
+      const department =
         document.getElementById("login-department");
 
-      departmentButtons.forEach(function (button) {
+      buttons.forEach(function (button) {
 
         button.addEventListener("click", function () {
 
-          const department =
-            button.getAttribute("data-department");
+          const value =
+            button.dataset.department;
 
-          departmentSelect.value = department;
+          department.value = value;
 
-          departmentButtons.forEach(function (item) {
+          buttons.forEach(function (item) {
             item.classList.remove("active");
           });
 
@@ -398,49 +455,58 @@
       });
 
 
-      /* -------------------------------------------------------
+      /* -----------------------------------------------
          Theme
-         ------------------------------------------------------- */
+         ----------------------------------------------- */
 
-      const themeToggle =
+      const themeButton =
         document.getElementById("theme-toggle");
 
       const savedTheme =
-        localStorage.getItem("visionxpress-theme");
+        localStorage.getItem("vx-theme");
 
-      if (savedTheme === "light") {
-        document.body.classList.add("light-theme");
+      if (savedTheme === "dark") {
+
+        document.body.classList.add("dark-theme");
+
       }
+
 
       function updateThemeButton() {
 
-        if (document.body.classList.contains("light-theme")) {
+        const dark =
+          document.body.classList.contains("dark-theme");
 
-          themeToggle.innerHTML =
-            '<span class="theme-icon">☀</span><span class="theme-text">Light</span>';
+        if (dark) {
+
+          themeButton.innerHTML =
+            '<span class="theme-icon">☀</span>' +
+            '<span class="theme-text">Light Mode</span>';
 
         } else {
 
-          themeToggle.innerHTML =
-            '<span class="theme-icon">☾</span><span class="theme-text">Dark</span>';
+          themeButton.innerHTML =
+            '<span class="theme-icon">☾</span>' +
+            '<span class="theme-text">Dark Mode</span>';
 
         }
 
       }
 
+
       updateThemeButton();
 
 
-      themeToggle.addEventListener("click", function () {
+      themeButton.addEventListener("click", function () {
 
-        document.body.classList.toggle("light-theme");
+        document.body.classList.toggle("dark-theme");
 
-        const isLight =
-          document.body.classList.contains("light-theme");
+        const dark =
+          document.body.classList.contains("dark-theme");
 
         localStorage.setItem(
-          "visionxpress-theme",
-          isLight ? "light" : "dark"
+          "vx-theme",
+          dark ? "dark" : "light"
         );
 
         updateThemeButton();
@@ -452,7 +518,7 @@
   </script>
 
 
-  <!-- EXISTING APPLICATION LOGIC -->
+  <!-- YOUR EXISTING APPLICATION LOGIC -->
   <script src="/app.js"></script>
 
 </body>
