@@ -1,57 +1,185 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>VisionXpress | Smart Maintenance Block Planning</title>
+  <meta charset="UTF-8">
 
-  <link rel="stylesheet" href="/styles.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    VisionXpress | Smart Maintenance Block Planning
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/styles.css"
+  >
+
 </head>
+
 
 <body>
 
-  <!-- Global theme button -->
+  <!-- =====================================================
+       THEME CONTROL
+       UI ONLY
+       ===================================================== -->
+
   <button
     id="theme-toggle"
     class="theme-toggle"
     type="button"
-    aria-label="Toggle light and dark mode"
+    aria-label="Change colour mode"
   >
     <span class="theme-icon">☾</span>
-    <span class="theme-text">Dark Mode</span>
+    <span class="theme-label">Dark</span>
   </button>
 
 
-  <!-- ======================================================
+  <!-- =====================================================
        LOGIN
-       ====================================================== -->
+       ===================================================== -->
 
-  <section id="login-view" class="login-shell">
+  <section
+    id="login-view"
+    class="login-shell"
+  >
 
-    <div class="login-page">
+    <div class="login-container">
+
 
       <!-- BRAND -->
-      <div class="login-brand">
 
-        <div class="brand-emblem">
+      <header class="login-brand">
+
+        <div class="brand-mark">
+
           <span>VX</span>
+
         </div>
 
-        <div class="brand-copy">
-          <div class="brand-name">VisionXpress</div>
-          <div class="brand-subtitle">
+        <div class="brand-text">
+
+          <div class="brand-name">
+            VisionXpress
+          </div>
+
+          <div class="brand-tagline">
             SMART RAIL MAINTENANCE BLOCK PLANNING
           </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- INTRO STRIP -->
+
+      <div class="railway-context">
+
+        <div class="context-item">
+
+          <span class="context-icon">
+            01
+          </span>
+
+          <div>
+            <strong>
+              Maintenance
+            </strong>
+
+            <small>
+              Requests & criticality
+            </small>
+          </div>
+
+        </div>
+
+
+        <span class="context-arrow">
+          →
+        </span>
+
+
+        <div class="context-item">
+
+          <span class="context-icon">
+            02
+          </span>
+
+          <div>
+            <strong>
+              Planning
+            </strong>
+
+            <small>
+              Feasible block windows
+            </small>
+          </div>
+
+        </div>
+
+
+        <span class="context-arrow">
+          →
+        </span>
+
+
+        <div class="context-item">
+
+          <span class="context-icon">
+            03
+          </span>
+
+          <div>
+            <strong>
+              Coordination
+            </strong>
+
+            <small>
+              Common possessions
+            </small>
+          </div>
+
+        </div>
+
+
+        <span class="context-arrow">
+          →
+        </span>
+
+
+        <div class="context-item">
+
+          <span class="context-icon">
+            04
+          </span>
+
+          <div>
+            <strong>
+              Approval
+            </strong>
+
+            <small>
+              BDMS decision
+            </small>
+          </div>
+
         </div>
 
       </div>
 
 
-      <!-- LOGIN PANEL -->
-      <div class="login-panel">
+      <!-- LOGIN CARD -->
 
-        <div class="login-panel-header">
+      <div class="login-card">
+
+
+        <div class="login-card-head">
 
           <div>
 
@@ -69,35 +197,55 @@
 
           </div>
 
-          <div class="local-status">
-            <span class="status-dot"></span>
+
+          <div class="system-indicator">
+
+            <span></span>
+
             SYSTEM ONLINE
+
           </div>
 
         </div>
 
 
+        <div class="login-divider"></div>
+
+
+        <!-- IMPORTANT:
+             Existing app.js still uses
+             #login-form and #login-department
+        -->
+
         <form id="login-form">
+
 
           <!-- DEPARTMENT -->
 
-          <div class="form-section">
+          <div class="login-field">
 
-            <label class="form-title">
-              Select Department
+            <label class="field-title">
+              Select Department / Block Type
             </label>
 
+
             <div class="department-grid">
+
 
               <button
                 type="button"
                 class="department-option active"
                 data-department="TMS"
               >
-                <span class="department-code">TMS</span>
+
+                <span class="department-code">
+                  TMS
+                </span>
+
                 <span class="department-name">
                   Track Maintenance
                 </span>
+
               </button>
 
 
@@ -106,10 +254,15 @@
                 class="department-option"
                 data-department="TDMS"
               >
-                <span class="department-code">TDMS</span>
+
+                <span class="department-code">
+                  TDMS
+                </span>
+
                 <span class="department-name">
                   Track Development
                 </span>
+
               </button>
 
 
@@ -118,10 +271,15 @@
                 class="department-option"
                 data-department="SMMS"
               >
-                <span class="department-code">SMMS</span>
+
+                <span class="department-code">
+                  SMMS
+                </span>
+
                 <span class="department-name">
                   Signal & Telecom
                 </span>
+
               </button>
 
 
@@ -130,10 +288,15 @@
                 class="department-option"
                 data-department="COA"
               >
-                <span class="department-code">COA</span>
+
+                <span class="department-code">
+                  COA
+                </span>
+
                 <span class="department-name">
                   Control Office
                 </span>
+
               </button>
 
 
@@ -142,25 +305,51 @@
                 class="department-option"
                 data-department="BDMS"
               >
-                <span class="department-code">BDMS</span>
+
+                <span class="department-code">
+                  BDMS
+                </span>
+
                 <span class="department-name">
                   Block Approval
                 </span>
+
               </button>
+
 
             </div>
 
 
-            <!-- KEEP ORIGINAL ID FOR app.js -->
+            <!-- Hidden native select.
+                 REQUIRED BY EXISTING app.js -->
+
             <select
               id="login-department"
-              class="department-hidden-select"
+              class="hidden-department-select"
+              aria-hidden="true"
+              tabindex="-1"
             >
-              <option value="TMS">TMS</option>
-              <option value="TDMS">TDMS</option>
-              <option value="SMMS">SMMS</option>
-              <option value="COA">COA</option>
-              <option value="BDMS">BDMS</option>
+
+              <option value="TMS">
+                TMS
+              </option>
+
+              <option value="TDMS">
+                TDMS
+              </option>
+
+              <option value="SMMS">
+                SMMS
+              </option>
+
+              <option value="COA">
+                COA
+              </option>
+
+              <option value="BDMS">
+                BDMS
+              </option>
+
             </select>
 
           </div>
@@ -168,7 +357,7 @@
 
           <!-- USER -->
 
-          <div class="input-group">
+          <div class="login-field">
 
             <label for="login-user">
               User ID
@@ -179,14 +368,14 @@
               required
               autocomplete="username"
               placeholder="Enter department user ID"
-            />
+            >
 
           </div>
 
 
           <!-- PASSWORD -->
 
-          <div class="input-group">
+          <div class="login-field">
 
             <label for="login-password">
               Password
@@ -198,65 +387,113 @@
               required
               autocomplete="current-password"
               placeholder="Enter password"
-            />
+            >
 
           </div>
 
 
-          <!-- SUBMIT -->
+          <!-- LOGIN -->
 
           <button
-            class="primary wide login-submit"
+            class="primary wide login-button"
             type="submit"
           >
-            <span>Sign in to Control Desk</span>
-            <span class="button-arrow">→</span>
+
+            <span>
+              Sign in to Control Desk
+            </span>
+
+            <span class="login-arrow">
+              →
+            </span>
+
           </button>
 
+
         </form>
+
+
+        <!-- STATUS STRIP -->
+
+        <div class="login-status-strip">
+
+          <div>
+
+            <span class="status-light"></span>
+
+            Local planning engine ready
+
+          </div>
+
+          <div>
+            Secure departmental access
+          </div>
+
+        </div>
 
       </div>
 
 
       <!-- FOOTER -->
 
-      <div class="login-footer">
+      <footer class="login-footer">
 
-        <span>VisionXpress</span>
+        <span>
+          VisionXpress
+        </span>
 
-        <span>|</span>
+        <span>•</span>
 
-        <span>Smart Maintenance Block Planning</span>
+        <span>
+          Smart Maintenance Block Planning
+        </span>
 
-        <span>|</span>
+        <span>•</span>
 
-        <span>SIH 2026</span>
+        <span>
+          SIH 2026
+        </span>
 
-      </div>
+      </footer>
+
 
     </div>
 
   </section>
 
 
-
-  <!-- ======================================================
+  <!-- =====================================================
        APPLICATION
-       ====================================================== -->
+       ===================================================== -->
 
-  <section id="app-view" class="app-shell hidden">
+  <section
+    id="app-view"
+    class="app-shell hidden"
+  >
+
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
+
+
+      <div class="sidebar-top-line"></div>
+
 
       <!-- BRAND -->
 
       <div class="sidebar-brand">
 
-        <div class="brand-emblem small">
-          <span>VX</span>
+        <div class="brand-mark small">
+
+          <span>
+            VX
+          </span>
+
         </div>
 
-        <div class="sidebar-brand-text">
+
+        <div>
 
           <strong>
             VisionXpress
@@ -271,6 +508,17 @@
       </div>
 
 
+      <!-- SYSTEM DESCRIPTION -->
+
+      <div class="sidebar-system">
+
+        <span class="sidebar-system-dot"></span>
+
+        Railway maintenance planning
+
+      </div>
+
+
       <!-- USER -->
 
       <div class="user-box">
@@ -281,6 +529,7 @@
         >
           TD
         </span>
+
 
         <div>
 
@@ -297,7 +546,7 @@
       </div>
 
 
-      <!-- NAVIGATION -->
+      <!-- NAV -->
 
       <nav id="nav-menu"></nav>
 
@@ -310,9 +559,7 @@
 
           <span class="dot"></span>
 
-          <span>
-            Local engine online
-          </span>
+          Local engine online
 
         </div>
 
@@ -329,14 +576,17 @@
     </aside>
 
 
-
     <!-- MAIN -->
 
     <main class="content">
 
+
+      <!-- TOPBAR -->
+
       <header class="topbar">
 
-        <div class="topbar-heading">
+
+        <div class="topbar-title">
 
           <div
             class="eyebrow"
@@ -345,14 +595,17 @@
             CONTROL CENTER
           </div>
 
+
           <h2 id="page-title">
             Dashboard
           </h2>
+
 
         </div>
 
 
         <div class="top-actions">
+
 
           <div class="date-control">
 
@@ -364,7 +617,7 @@
               id="planning-date"
               type="date"
               value="2026-09-01"
-            />
+            >
 
           </div>
 
@@ -382,6 +635,7 @@
             class="icon-button"
             aria-label="Notifications"
           >
+
             🔔
 
             <span
@@ -393,133 +647,198 @@
 
           </button>
 
+
         </div>
 
       </header>
 
 
-      <!-- APP CONTENT -->
+      <!-- APPLICATION CONTENT -->
+
       <div id="main-view"></div>
 
+
     </main>
+
 
   </section>
 
 
-  <!-- MODALS -->
+  <!-- =====================================================
+       MODAL / TOAST ROOTS
+       ===================================================== -->
 
   <div id="modal-root"></div>
-
-
-  <!-- TOASTS -->
 
   <div id="toast-root"></div>
 
 
-  <!-- ======================================================
-       UI-ONLY JAVASCRIPT
-       Does not touch backend.
-       ====================================================== -->
+  <!-- =====================================================
+       FRONTEND THEME + DEPARTMENT UI
+       NO BACKEND CALLS
+       ===================================================== -->
 
   <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-
-      /* -----------------------------------------------
-         Department selection
-         ----------------------------------------------- */
-
-      const buttons =
-        document.querySelectorAll(".department-option");
-
-      const department =
-        document.getElementById("login-department");
-
-      buttons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-          const value =
-            button.dataset.department;
-
-          department.value = value;
-
-          buttons.forEach(function (item) {
-            item.classList.remove("active");
-          });
-
-          button.classList.add("active");
-
-        });
-
-      });
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
 
 
-      /* -----------------------------------------------
-         Theme
-         ----------------------------------------------- */
+        /* ==========================================
+           DEPARTMENT SELECTION
+           ========================================== */
 
-      const themeButton =
-        document.getElementById("theme-toggle");
+        const departmentButtons =
+          document.querySelectorAll(
+            ".department-option"
+          );
 
-      const savedTheme =
-        localStorage.getItem("vx-theme");
-
-      if (savedTheme === "dark") {
-
-        document.body.classList.add("dark-theme");
-
-      }
+        const departmentSelect =
+          document.getElementById(
+            "login-department"
+          );
 
 
-      function updateThemeButton() {
+        departmentButtons.forEach(
+          function (button) {
 
-        const dark =
-          document.body.classList.contains("dark-theme");
+            button.addEventListener(
+              "click",
+              function () {
 
-        if (dark) {
+                const value =
+                  button.dataset.department;
 
-          themeButton.innerHTML =
-            '<span class="theme-icon">☀</span>' +
-            '<span class="theme-text">Light Mode</span>';
 
-        } else {
+                if (departmentSelect) {
 
-          themeButton.innerHTML =
-            '<span class="theme-icon">☾</span>' +
-            '<span class="theme-text">Dark Mode</span>';
+                  departmentSelect.value =
+                    value;
+
+                  departmentSelect.dispatchEvent(
+                    new Event(
+                      "change",
+                      {
+                        bubbles: true
+                      }
+                    )
+                  );
+
+                }
+
+
+                departmentButtons.forEach(
+                  function (item) {
+
+                    item.classList.remove(
+                      "active"
+                    );
+
+                  }
+                );
+
+
+                button.classList.add(
+                  "active"
+                );
+
+              }
+            );
+
+          }
+        );
+
+
+        /* ==========================================
+           THEME
+           ========================================== */
+
+        const themeButton =
+          document.getElementById(
+            "theme-toggle"
+          );
+
+
+        function updateTheme() {
+
+          const dark =
+            document.body.classList.contains(
+              "dark-theme"
+            );
+
+
+          if (dark) {
+
+            themeButton.innerHTML =
+              '<span class="theme-icon">☀</span>' +
+              '<span class="theme-label">Light</span>';
+
+          }
+          else {
+
+            themeButton.innerHTML =
+              '<span class="theme-icon">☾</span>' +
+              '<span class="theme-label">Dark</span>';
+
+          }
 
         }
 
-      }
+
+        const savedTheme =
+          localStorage.getItem(
+            "visionxpress-theme"
+          );
 
 
-      updateThemeButton();
+        if (savedTheme === "dark") {
+
+          document.body.classList.add(
+            "dark-theme"
+          );
+
+        }
 
 
-      themeButton.addEventListener("click", function () {
+        updateTheme();
 
-        document.body.classList.toggle("dark-theme");
 
-        const dark =
-          document.body.classList.contains("dark-theme");
+        themeButton.addEventListener(
+          "click",
+          function () {
 
-        localStorage.setItem(
-          "vx-theme",
-          dark ? "dark" : "light"
+            document.body.classList.toggle(
+              "dark-theme"
+            );
+
+
+            localStorage.setItem(
+              "visionxpress-theme",
+              document.body.classList.contains(
+                "dark-theme"
+              )
+                ? "dark"
+                : "light"
+            );
+
+
+            updateTheme();
+
+          }
         );
 
-        updateThemeButton();
-
-      });
-
-    });
+      }
+    );
 
   </script>
 
 
-  <!-- YOUR EXISTING APPLICATION LOGIC -->
+  <!-- EXISTING APPLICATION LOGIC
+       DO NOT CHANGE -->
+
   <script src="/app.js"></script>
 
 </body>
+
 </html>
