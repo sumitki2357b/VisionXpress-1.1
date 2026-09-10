@@ -36,6 +36,8 @@
 
         <div class="login-card">
 
+            <!-- Brand -->
+
             <div class="login-card-header">
 
                 <div class="login-brand">
@@ -78,24 +80,44 @@
             </div>
 
 
+            <!-- Login -->
+
             <form
                 id="login-form"
                 class="login-form"
             >
 
+                <!-- Existing JS requires this select -->
                 <select
                     id="login-department"
                     class="hidden-department"
                     tabindex="-1"
                     aria-hidden="true"
                 >
-                    <option value="TMS">TMS</option>
-                    <option value="TDMS">TDMS</option>
-                    <option value="SMMS">SMMS</option>
-                    <option value="COA">COA</option>
-                    <option value="BDMS">BDMS</option>
+                    <option value="TMS">
+                        TMS
+                    </option>
+
+                    <option value="TDMS">
+                        TDMS
+                    </option>
+
+                    <option value="SMMS">
+                        SMMS
+                    </option>
+
+                    <option value="COA">
+                        COA
+                    </option>
+
+                    <option value="BDMS">
+                        BDMS
+                    </option>
+
                 </select>
 
+
+                <!-- Department -->
 
                 <div class="login-section-title">
                     Operating department
@@ -107,7 +129,13 @@
                     <button
                         type="button"
                         class="department-button active"
-                        onclick="selectVisionXpressDepartment('TMS', this)"
+                        data-department="TMS"
+                        onclick="
+                            selectVisionXpressDepartment(
+                                'TMS',
+                                this
+                            )
+                        "
                     >
                         <span class="department-code">
                             TMS
@@ -122,7 +150,13 @@
                     <button
                         type="button"
                         class="department-button"
-                        onclick="selectVisionXpressDepartment('TDMS', this)"
+                        data-department="TDMS"
+                        onclick="
+                            selectVisionXpressDepartment(
+                                'TDMS',
+                                this
+                            )
+                        "
                     >
                         <span class="department-code">
                             TDMS
@@ -137,7 +171,13 @@
                     <button
                         type="button"
                         class="department-button"
-                        onclick="selectVisionXpressDepartment('SMMS', this)"
+                        data-department="SMMS"
+                        onclick="
+                            selectVisionXpressDepartment(
+                                'SMMS',
+                                this
+                            )
+                        "
                     >
                         <span class="department-code">
                             SMMS
@@ -152,7 +192,13 @@
                     <button
                         type="button"
                         class="department-button"
-                        onclick="selectVisionXpressDepartment('COA', this)"
+                        data-department="COA"
+                        onclick="
+                            selectVisionXpressDepartment(
+                                'COA',
+                                this
+                            )
+                        "
                     >
                         <span class="department-code">
                             COA
@@ -167,7 +213,13 @@
                     <button
                         type="button"
                         class="department-button"
-                        onclick="selectVisionXpressDepartment('BDMS', this)"
+                        data-department="BDMS"
+                        onclick="
+                            selectVisionXpressDepartment(
+                                'BDMS',
+                                this
+                            )
+                        "
                     >
                         <span class="department-code">
                             BDMS
@@ -180,6 +232,8 @@
 
                 </div>
 
+
+                <!-- User ID -->
 
                 <div class="login-field">
 
@@ -197,6 +251,8 @@
 
                 </div>
 
+
+                <!-- Password -->
 
                 <div class="login-field">
 
@@ -253,7 +309,13 @@
         class="app-shell hidden"
     >
 
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
         <aside class="sidebar">
+
+            <!-- Brand -->
 
             <div class="sidebar-brand">
 
@@ -275,6 +337,8 @@
 
             </div>
 
+
+            <!-- Department / User -->
 
             <div class="sidebar-section-label">
                 OPERATIONS
@@ -305,12 +369,16 @@
             </div>
 
 
+            <!-- Navigation -->
+
             <nav
                 id="nav-menu"
                 class="sidebar-nav"
             >
             </nav>
 
+
+            <!-- Planning workflow -->
 
             <div class="sidebar-workflow">
 
@@ -324,19 +392,25 @@
                         INPUT
                     </span>
 
-                    <span class="mini-arrow">›</span>
+                    <span class="mini-arrow">
+                        ›
+                    </span>
 
                     <span>
                         PLAN
                     </span>
 
-                    <span class="mini-arrow">›</span>
+                    <span class="mini-arrow">
+                        ›
+                    </span>
 
                     <span>
                         COORDINATE
                     </span>
 
-                    <span class="mini-arrow">›</span>
+                    <span class="mini-arrow">
+                        ›
+                    </span>
 
                     <span>
                         APPROVE
@@ -347,6 +421,8 @@
             </div>
 
 
+            <!-- Sidebar bottom -->
+
             <div class="sidebar-bottom">
 
                 <div class="engine-status">
@@ -356,6 +432,7 @@
                     Local planning engine online
 
                 </div>
+
 
                 <button
                     id="logout-button"
@@ -370,7 +447,15 @@
         </aside>
 
 
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
         <main class="content">
+
+
+            <!-- TOP BAR -->
 
             <header class="topbar">
 
@@ -417,6 +502,17 @@
 
 
                     <button
+                        id="mode-button"
+                        type="button"
+                        class="header-button mode-button"
+                        aria-label="Toggle display mode"
+                        title="Toggle display mode"
+                    >
+                        Mode
+                    </button>
+
+
+                    <button
                         id="notify-button"
                         type="button"
                         class="notification-button"
@@ -440,6 +536,11 @@
 
             </header>
 
+
+
+            <!-- =================================================
+                 DASHBOARD WORKFLOW
+                 ================================================= -->
 
             <div
                 id="dashboard-workflow"
@@ -569,21 +670,37 @@
             </div>
 
 
+
+            <!-- =================================================
+                 DYNAMIC PAGE CONTENT
+                 ================================================= -->
+
             <div
                 id="main-view"
                 class="main-view"
             >
             </div>
 
+
         </main>
 
     </section>
 
 
+
+    <!-- =====================================================
+         GLOBAL UI ROOTS
+         ===================================================== -->
+
     <div id="toast-root"></div>
 
     <div id="modal-root"></div>
 
+
+
+    <!-- =====================================================
+         DEPARTMENT SELECTION
+         ===================================================== -->
 
     <script>
 
@@ -605,22 +722,18 @@
                 .querySelectorAll(
                     ".department-button"
                 )
-                .forEach(
-                    function (item) {
+                .forEach(function (item) {
 
-                        item.classList.remove(
-                            "active"
-                        );
+                    item.classList.remove(
+                        "active"
+                    );
 
-                    }
-                );
+                });
 
             if (button) {
-
                 button.classList.add(
                     "active"
                 );
-
             }
 
         }
@@ -628,7 +741,11 @@
     </script>
 
 
-    <script src="/app.js"></script>
+    <!-- Existing application logic -->
+
+    <script
+        src="/app.js"
+    ></script>
 
 </body>
 </html>

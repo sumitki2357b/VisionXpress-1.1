@@ -1,57 +1,120 @@
+/* =========================================================
+   VISIONXPRESS APPLICATION LOGIC
+   ========================================================= */
+
+
+/* =========================================================
+   APPLICATION STATE
+   ========================================================= */
+
 const state = {
-    token: localStorage.getItem("vx_token") || "",
-    user: JSON.parse(localStorage.getItem("vx_user") || "null"),
-    page: "dashboard",
-    planningDate: localStorage.getItem("vx_date") || "2026-09-01",
+
+    token:
+        localStorage.getItem("vx_token") || "",
+
+    user:
+        JSON.parse(
+            localStorage.getItem("vx_user") || "null"
+        ),
+
+    page:
+        "dashboard",
+
+    planningDate:
+        localStorage.getItem("vx_date") ||
+        "2026-09-01",
+
     blocks: [],
+
     requests: []
+
 };
 
-const $ = (selector) => document.querySelector(selector);
-const main = $("#main-view");
 
-async function api(path, options = {}) {
-    const headers = options.headers ? { ...options.headers } : {};
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+const $ = (selector) =>
+    document.querySelector(selector);
+
+const main =
+    $("#main-view");
+
+
+/* =========================================================
+   API
+   ========================================================= */
+
+async function api(
+    path,
+    options = {}
+) {
+
+    const headers =
+        options.headers
+            ? { ...options.headers }
+            : {};
 
     if (state.token) {
-        headers.Authorization = `Bearer ${state.token}`;
+
+        headers.Authorization =
+            `Bearer ${state.token}`;
     }
 
     if (
         !(options.body instanceof FormData) &&
         options.body !== undefined
     ) {
-        headers["Content-Type"] = "application/json";
+
+        headers["Content-Type"] =
+            "application/json";
     }
 
-    const response = await fetch(path, {
-        ...options,
-        headers
-    });
+    const response =
+        await fetch(
+            path,
+            {
+                ...options,
+                headers
+            }
+        );
 
-    const text = await response.text();
+    const text =
+        await response.text();
 
     let data = {};
 
     try {
-        data = text ? JSON.parse(text) : {};
+
+        data =
+            text
+                ? JSON.parse(text)
+                : {};
+
     } catch {
+
         data = {
             detail: text
         };
     }
 
     if (response.status === 401) {
+
         logout(false);
     }
 
     if (!response.ok) {
+
         throw Object.assign(
             new Error(
-                data.detail || "Request failed"
+                data.detail ||
+                "Request failed"
             ),
             {
-                status: response.status,
+                status:
+                    response.status,
+
                 data
             }
         );
@@ -60,17 +123,29 @@ async function api(path, options = {}) {
     return data;
 }
 
-function toast(message, type = "info") {
-    const root = $("#toast-root");
 
-    if (!root) {
-        return;
-    }
+/* =========================================================
+   UTILITIES
+   ========================================================= */
 
-    const el = document.createElement("div");
+function toast(
+    message,
+    type = "info"
+) {
 
-    el.className = `toast ${type}`;
-    el.textContent = message;
+    const root =
+        $("#toast-root");
+
+    if (!root) return;
+
+    const el =
+        document.createElement("div");
+
+    el.className =
+        `toast ${type}`;
+
+    el.textContent =
+        message;
 
     root.appendChild(el);
 
@@ -80,7 +155,9 @@ function toast(message, type = "info") {
     );
 }
 
+
 function fmt(value) {
+
     return (
         value == null ||
         value === ""
@@ -89,81 +166,146 @@ function fmt(value) {
         : String(value);
 }
 
+
 function escapeHtml(value) {
-    return String(value ?? "").replace(
+
+    return String(
+        value ?? ""
+    ).replace(
         /[&<>'"]/g,
         (c) => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            "'": "&#39;",
-            '"': "&quot;"
+            "&":
+                "&amp;",
+
+            "<":
+                "&lt;",
+
+            ">":
+                "&gt;",
+
+            "'":
+                "&#39;",
+
+            '"':
+                "&quot;"
         }[c])
     );
 }
 
-function priorityClass(priority = "LOW") {
-    return String(priority).toLowerCase();
+
+function priorityClass(
+    priority = "LOW"
+) {
+
+    return String(
+        priority
+    ).toLowerCase();
 }
 
+
 function initials(text) {
-    return String(text || "VX")
+
+    return String(
+        text || "VX"
+    )
         .slice(0, 2)
         .toUpperCase();
 }
 
-function showApp() {
-    $("#login-view").classList.add("hidden");
-    $("#app-view").classList.remove("hidden");
 
-    $("#user-name").textContent =
+/* =========================================================
+   VIEW MANAGEMENT
+   ========================================================= */
+
+function showApp() {
+
+    $("#login-view")
+        .classList
+        .add("hidden");
+
+    $("#app-view")
+        .classList
+        .remove("hidden");
+
+    $("#user-name")
+        .textContent =
         state.user.user_id;
 
-    $("#user-department").textContent =
+    $("#user-department")
+        .textContent =
         state.user.department;
 
-    $("#user-avatar").textContent =
-        initials(state.user.department);
+    $("#user-avatar")
+        .textContent =
+        initials(
+            state.user.department
+        );
 
-    $("#planning-date").value =
+    $("#planning-date")
+        .value =
         state.planningDate;
 
     buildNav();
+
     renderPage();
+
     refreshNotifications();
 }
 
+
 function showLogin() {
-    $("#app-view").classList.add("hidden");
-    $("#login-view").classList.remove("hidden");
+
+    $("#app-view")
+        .classList
+        .add("hidden");
+
+    $("#login-view")
+        .classList
+        .remove("hidden");
 }
 
-function logout(server = true) {
+
+function logout(
+    server = true
+) {
+
     if (server) {
+
         api(
             "/api/auth/logout",
             {
-                method: "POST"
+                method:
+                    "POST"
             }
         ).catch(() => {});
     }
 
     state.token = "";
+
     state.user = null;
 
-    localStorage.removeItem("vx_token");
-    localStorage.removeItem("vx_user");
+    localStorage.removeItem(
+        "vx_token"
+    );
+
+    localStorage.removeItem(
+        "vx_user"
+    );
 
     showLogin();
 }
 
+
+/* =========================================================
+   WORKFLOW VISIBILITY
+   ========================================================= */
+
 function updateWorkflowVisibility() {
+
     const workflow =
         $("#dashboard-workflow");
 
-    if (!workflow) {
-        return;
-    }
+    if (!workflow) return;
 
     workflow.style.display =
         state.page === "dashboard"
@@ -171,31 +313,55 @@ function updateWorkflowVisibility() {
             : "none";
 }
 
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
 function buildNav() {
-    if (!state.user) {
-        return;
-    }
+
+    if (!state.user) return;
 
     const department =
         state.user.department;
 
-    const items = [
-        ["dashboard", "Dashboard"]
-    ];
+    const items =
+        [
+            [
+                "dashboard",
+                "Dashboard"
+            ]
+        ];
 
     if (
         ["TMS", "TDMS", "SMMS"]
             .includes(department)
     ) {
+
         items.push(
-            ["submit", "Submit Request"],
-            ["track", "Track Request"]
+            [
+                "submit",
+                "Submit Request"
+            ]
+        );
+
+        items.push(
+            [
+                "track",
+                "Track Request"
+            ]
         );
     }
 
-    if (department === "COA") {
+    if (
+        department === "COA"
+    ) {
+
         items.push(
-            ["coa", "COA Schedule"]
+            [
+                "coa",
+                "COA Schedule"
+            ]
         );
     }
 
@@ -203,22 +369,36 @@ function buildNav() {
         department === "TDMS" ||
         department === "BDMS"
     ) {
+
         items.push(
-            ["blocks", "Block Dashboard"]
+            [
+                "blocks",
+                "Block Dashboard"
+            ]
         );
     }
 
-    if (department === "BDMS") {
+    if (
+        department === "BDMS"
+    ) {
+
         items.push(
-            ["approvals", "BDMS Approvals"]
+            [
+                "approvals",
+                "BDMS Approvals"
+            ]
         );
     }
 
     items.push(
-        ["notifications", "Alerts"]
+        [
+            "notifications",
+            "Alerts"
+        ]
     );
 
-    $("#nav-menu").innerHTML =
+    $("#nav-menu")
+        .innerHTML =
         items
             .map(
                 ([id, label]) =>
@@ -238,108 +418,190 @@ function buildNav() {
             .join("");
 
     document
-        .querySelectorAll(".nav-item")
+        .querySelectorAll(
+            ".nav-item"
+        )
         .forEach(
             (button) => {
-                button.onclick = () => {
-                    state.page =
-                        button.dataset.page;
 
-                    buildNav();
-                    renderPage();
-                };
+                button.onclick =
+                    () => {
+
+                        state.page =
+                            button.dataset.page;
+
+                        buildNav();
+
+                        renderPage();
+
+                    };
             }
         );
 }
 
+
+/* =========================================================
+   PAGE RENDERING
+   ========================================================= */
+
 async function renderPage() {
+
     const labels = {
-        dashboard: "CONTROL CENTER",
-        submit: "MAINTENANCE REQUEST",
-        track: "REQUEST TRACKING",
-        coa: "COA OPERATIONS",
-        blocks: "BLOCK CONTROL",
-        approvals: "BDMS DECISION DESK",
-        notifications: "NOTIFICATIONS"
+
+        dashboard:
+            "CONTROL CENTER",
+
+        submit:
+            "MAINTENANCE REQUEST",
+
+        track:
+            "REQUEST TRACKING",
+
+        coa:
+            "COA OPERATIONS",
+
+        blocks:
+            "BLOCK CONTROL",
+
+        approvals:
+            "BDMS DECISION DESK",
+
+        notifications:
+            "NOTIFICATIONS"
     };
 
-    $("#page-kicker").textContent =
+    $("#page-kicker")
+        .textContent =
         labels[state.page] ||
         "CONTROL CENTER";
 
-    $("#page-title").textContent =
+    $("#page-title")
+        .textContent =
         state.page === "dashboard"
             ? "Dashboard"
             : (
-                state.page.charAt(0).toUpperCase() +
+                state.page
+                    .charAt(0)
+                    .toUpperCase() +
                 state.page.slice(1)
             );
 
     updateWorkflowVisibility();
 
-    main.innerHTML = `
+    main.innerHTML =
+        `
         <div class="loading">
             Loading control view…
         </div>
-    `;
+        `;
 
     try {
-        if (state.page === "dashboard") {
+
+        if (
+            state.page ===
+            "dashboard"
+        ) {
+
             return await renderDashboard();
         }
 
-        if (state.page === "submit") {
+        if (
+            state.page ===
+            "submit"
+        ) {
+
             return renderSubmit();
         }
 
-        if (state.page === "track") {
+        if (
+            state.page ===
+            "track"
+        ) {
+
             return renderTrack();
         }
 
-        if (state.page === "coa") {
+        if (
+            state.page ===
+            "coa"
+        ) {
+
             return await renderCOA();
         }
 
-        if (state.page === "blocks") {
+        if (
+            state.page ===
+            "blocks"
+        ) {
+
             return await renderBlocks();
         }
 
-        if (state.page === "approvals") {
+        if (
+            state.page ===
+            "approvals"
+        ) {
+
             return await renderApprovals();
         }
 
-        if (state.page === "notifications") {
+        if (
+            state.page ===
+            "notifications"
+        ) {
+
             return await renderNotifications();
         }
+
     } catch (error) {
-        main.innerHTML = `
+
+        main.innerHTML =
+            `
             <div class="panel">
                 <div
                     class="danger-text"
                     style="padding:20px"
                 >
-                    ${escapeHtml(error.message)}
+                    ${escapeHtml(
+                        error.message
+                    )}
                 </div>
             </div>
-        `;
+            `;
     }
 }
 
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
 async function renderDashboard() {
-    const data = await api(
-        `/api/dashboard?planning_date=${state.planningDate}`
-    );
 
-    const blocks = data.blocks || [];
-    const requests = data.requests || [];
+    const data =
+        await api(
+            `/api/dashboard?planning_date=${state.planningDate}`
+        );
 
-    state.blocks = blocks;
-    state.requests = requests;
+    const blocks =
+        data.blocks || [];
 
-    main.innerHTML = `
+    const requests =
+        data.requests || [];
+
+    state.blocks =
+        blocks;
+
+    state.requests =
+        requests;
+
+
+    main.innerHTML =
+        `
         <div class="stats-grid">
 
             <div class="stat-card">
+
                 <div class="label">
                     Planning date
                 </div>
@@ -356,10 +618,12 @@ async function renderDashboard() {
                 <div class="hint">
                     Active control window
                 </div>
+
             </div>
 
 
             <div class="stat-card">
+
                 <div class="label">
                     Recommended blocks
                 </div>
@@ -379,10 +643,12 @@ async function renderDashboard() {
                 <div class="hint">
                     Awaiting decision
                 </div>
+
             </div>
 
 
             <div class="stat-card">
+
                 <div class="label">
                     Approved
                 </div>
@@ -400,10 +666,12 @@ async function renderDashboard() {
                 <div class="hint">
                     Confirmed blocks
                 </div>
+
             </div>
 
 
             <div class="stat-card">
+
                 <div class="label">
                     Tasks
                 </div>
@@ -418,10 +686,12 @@ async function renderDashboard() {
                 <div class="hint">
                     In current workflow
                 </div>
+
             </div>
 
 
             <div class="stat-card">
+
                 <div class="label">
                     System status
                 </div>
@@ -436,6 +706,7 @@ async function renderDashboard() {
                 <div class="hint">
                     0 known resource conflicts
                 </div>
+
             </div>
 
         </div>
@@ -475,11 +746,14 @@ async function renderDashboard() {
                 </div>
 
                 ${
-                    state.user.department === "TDMS"
+                    state.user.department ===
+                    "TDMS"
+
                         ? renderBlockCards(
                             blocks.slice(0, 8),
                             true
                         )
+
                         : renderRequestCards(
                             requests.slice(0, 8)
                         )
@@ -507,20 +781,30 @@ async function renderDashboard() {
             </section>
 
         </div>
-    `;
+        `;
 }
 
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
 function quickActions() {
+
     const department =
         state.user.department;
+
 
     if (
         [
             "TMS",
             "TDMS",
             "SMMS"
-        ].includes(department)
+        ].includes(
+            department
+        )
     ) {
+
         return `
         <div class="block-list">
 
@@ -540,6 +824,7 @@ function quickActions() {
 
             ${
                 department === "TDMS"
+
                     ? `
                     <button
                         class="secondary wide"
@@ -548,6 +833,7 @@ function quickActions() {
                         Open block dashboard
                     </button>
                     `
+
                     : ""
             }
 
@@ -555,7 +841,11 @@ function quickActions() {
         `;
     }
 
-    if (department === "COA") {
+
+    if (
+        department === "COA"
+    ) {
+
         return `
         <div class="block-list">
 
@@ -576,6 +866,7 @@ function quickActions() {
         </div>
         `;
     }
+
 
     return `
     <div class="block-list">
@@ -612,17 +903,33 @@ function quickActions() {
     `;
 }
 
+
+/* =========================================================
+   NAVIGATION HELPER
+   ========================================================= */
+
 function go(page) {
-    state.page = page;
+
+    state.page =
+        page;
+
     buildNav();
+
     renderPage();
 }
+
+
+/* =========================================================
+   BLOCK CARDS
+   ========================================================= */
 
 function renderBlockCards(
     blocks,
     canReview = false
 ) {
+
     if (!blocks.length) {
+
         return `
         <div class="empty">
             No blocks available for this
@@ -630,6 +937,7 @@ function renderBlockCards(
         </div>
         `;
     }
+
 
     return `
     <div class="block-list">
@@ -684,15 +992,19 @@ function renderBlockCards(
 
                                 <div class="block-time">
 
-                                    ${escapeHtml(
-                                        block.start_time
-                                    )}
+                                    ${
+                                        escapeHtml(
+                                            block.start_time
+                                        )
+                                    }
 
                                     →
 
-                                    ${escapeHtml(
-                                        block.end_time
-                                    )}
+                                    ${
+                                        escapeHtml(
+                                            block.end_time
+                                        )
+                                    }
 
                                 </div>
 
@@ -747,7 +1059,8 @@ function renderBlockCards(
                                 ${
                                     canReview &&
                                     block.status ===
-                                        "PENDING_APPROVAL"
+                                    "PENDING_APPROVAL"
+
                                         ? `
                                         <button
                                             class="small-btn"
@@ -762,6 +1075,7 @@ function renderBlockCards(
                                             Modify
                                         </button>
                                         `
+
                                         : ""
                                 }
 
@@ -777,14 +1091,24 @@ function renderBlockCards(
     `;
 }
 
-function renderRequestCards(requests) {
+
+/* =========================================================
+   REQUEST CARDS
+   ========================================================= */
+
+function renderRequestCards(
+    requests
+) {
+
     if (!requests.length) {
+
         return `
         <div class="empty">
             No request activity yet.
         </div>
         `;
     }
+
 
     return `
     <div class="request-list">
@@ -856,8 +1180,15 @@ function renderRequestCards(requests) {
     `;
 }
 
+
+/* =========================================================
+   SUBMIT REQUEST
+   ========================================================= */
+
 function renderSubmit() {
-    main.innerHTML = `
+
+    main.innerHTML =
+        `
         <section class="panel">
 
             <div class="section-title">
@@ -879,7 +1210,9 @@ function renderSubmit() {
                     FAST IMPORT
                 </div>
 
-                <h3 style="margin:8px 0">
+                <h3
+                    style="margin:8px 0"
+                >
                     Upload a populated maintenance file
                 </h3>
 
@@ -956,10 +1289,12 @@ function renderSubmit() {
             ${manualForm()}
 
         </section>
-    `;
+        `;
+
 
     $("#maint-file").onchange =
         () => {
+
             $("#maint-file-name")
                 .textContent =
                 $("#maint-file")
@@ -968,60 +1303,113 @@ function renderSubmit() {
                 "No file selected";
         };
 
+
     $("#manual-form")
         .onsubmit =
         submitManual;
 }
 
+
+/* =========================================================
+   MANUAL FORM
+   ========================================================= */
+
 function manualForm() {
 
     const fields = [
-        ["location", "Station / location"],
-        ["section_id", "Section ID"],
-        ["asset_id", "Asset ID"],
-        ["asset_type", "Asset type"],
+
+        [
+            "location",
+            "Station / location"
+        ],
+
+        [
+            "section_id",
+            "Section ID"
+        ],
+
+        [
+            "asset_id",
+            "Asset ID"
+        ],
+
+        [
+            "asset_type",
+            "Asset type"
+        ],
+
         [
             "maintenance_category",
             "Maintenance category"
         ],
-        ["defect_id", "Defect ID"],
-        ["defect_severity", "Defect severity"],
-        ["failure_risk", "Failure risk"],
+
+        [
+            "defect_id",
+            "Defect ID"
+        ],
+
+        [
+            "defect_severity",
+            "Defect severity"
+        ],
+
+        [
+            "failure_risk",
+            "Failure risk"
+        ],
+
         [
             "asset_operational_status",
             "Asset operational status"
         ],
+
         [
             "affected_asset_quantity",
             "Affected asset quantity"
         ],
+
         [
             "last_maintenance_date",
             "Last maintenance date"
         ],
-        ["due_date", "Due date"],
+
+        [
+            "due_date",
+            "Due date"
+        ],
+
         [
             "estimated_duration_minutes",
             "Estimated duration (minutes)"
         ],
+
         [
             "required_resources",
             "Required resources"
         ],
+
         [
             "block_type_required",
             "Block type"
         ],
-        ["preferred_date", "Preferred date"],
+
+        [
+            "preferred_date",
+            "Preferred date"
+        ],
+
         [
             "preferred_start_time",
             "Preferred start time"
         ],
+
         [
             "preferred_end_time",
             "Preferred end time"
         ]
+
     ];
+
 
     return `
     <form
@@ -1038,7 +1426,9 @@ function manualForm() {
             <textarea
                 name="work_description"
                 required
-                placeholder="Describe the maintenance work precisely"
+                placeholder="
+                    Describe the maintenance work precisely
+                "
             ></textarea>
 
         </div>
@@ -1059,11 +1449,13 @@ function manualForm() {
                             ].includes(name)
                         ) {
 
-                            control = `
+                            control =
+                                `
                                 <select
                                     name="${name}"
                                     required
                                 >
+
                                     <option value="">
                                         Select
                                     </option>
@@ -1083,19 +1475,23 @@ function manualForm() {
                                     <option>
                                         LOW
                                     </option>
-                                </select>
-                            `;
 
-                        } else if (
+                                </select>
+                                `;
+                        }
+
+                        else if (
                             name ===
                             "asset_operational_status"
                         ) {
 
-                            control = `
+                            control =
+                                `
                                 <select
                                     name="${name}"
                                     required
                                 >
+
                                     <option>
                                         OPERATIONAL
                                     </option>
@@ -1115,19 +1511,23 @@ function manualForm() {
                                     <option>
                                         NORMAL
                                     </option>
-                                </select>
-                            `;
 
-                        } else if (
+                                </select>
+                                `;
+                        }
+
+                        else if (
                             name ===
                             "block_type_required"
                         ) {
 
-                            control = `
+                            control =
+                                `
                                 <select
                                     name="${name}"
                                     required
                                 >
+
                                     <option>
                                         PARTIAL
                                     </option>
@@ -1135,32 +1535,42 @@ function manualForm() {
                                     <option>
                                         FULL
                                     </option>
-                                </select>
-                            `;
 
-                        } else if (
-                            name.includes("date")
+                                </select>
+                                `;
+                        }
+
+                        else if (
+                            name.includes(
+                                "date"
+                            )
                         ) {
 
-                            control = `
+                            control =
+                                `
                                 <input
                                     type="date"
                                     name="${name}"
                                 >
-                            `;
+                                `;
+                        }
 
-                        } else if (
-                            name.includes("time")
+                        else if (
+                            name.includes(
+                                "time"
+                            )
                         ) {
 
-                            control = `
+                            control =
+                                `
                                 <input
                                     type="time"
                                     name="${name}"
                                 >
-                            `;
+                                `;
+                        }
 
-                        } else {
+                        else {
 
                             const required =
                                 [
@@ -1173,16 +1583,19 @@ function manualForm() {
                                     "failure_risk",
                                     "asset_operational_status",
                                     "estimated_duration_minutes"
-                                ].includes(name)
+                                ].includes(
+                                    name
+                                )
                                     ? "required"
                                     : "";
 
-                            control = `
+                            control =
+                                `
                                 <input
                                     name="${name}"
                                     ${required}
                                 >
-                            `;
+                                `;
                         }
 
 
@@ -1197,6 +1610,7 @@ function manualForm() {
 
                         </div>
                         `;
+
                     }
                 )
                 .join("")
@@ -1235,6 +1649,7 @@ function manualForm() {
                 name="requires_block"
                 required
             >
+
                 <option value="true">
                     Yes
                 </option>
@@ -1242,6 +1657,7 @@ function manualForm() {
                 <option value="false">
                     No
                 </option>
+
             </select>
 
         </div>
@@ -1257,6 +1673,7 @@ function manualForm() {
                 name="overdue"
                 required
             >
+
                 <option value="false">
                     No
                 </option>
@@ -1264,12 +1681,15 @@ function manualForm() {
                 <option value="true">
                     Yes
                 </option>
+
             </select>
 
         </div>
 
 
-        <div class="form-actions full">
+        <div
+            class="form-actions full"
+        >
 
             <button
                 class="secondary"
@@ -1291,18 +1711,28 @@ function manualForm() {
     `;
 }
 
-async function submitManual(event) {
+
+/* =========================================================
+   MANUAL SUBMIT
+   ========================================================= */
+
+async function submitManual(
+    event
+) {
 
     event.preventDefault();
 
     const data = {};
 
-    new FormData(event.target)
+    new FormData(
+        event.target
+    )
         .forEach(
             (value, key) => {
                 data[key] = value;
             }
         );
+
 
     for (
         const key of [
@@ -1311,9 +1741,11 @@ async function submitManual(event) {
             "overdue"
         ]
     ) {
+
         data[key] =
             data[key] === "true";
     }
+
 
     for (
         const key of [
@@ -1321,11 +1753,18 @@ async function submitManual(event) {
             "estimated_duration_minutes"
         ]
     ) {
-        if (data[key] !== "") {
+
+        if (
+            data[key] !== ""
+        ) {
+
             data[key] =
-                Number(data[key]);
+                Number(
+                    data[key]
+                );
         }
     }
+
 
     try {
 
@@ -1351,11 +1790,13 @@ async function submitManual(event) {
     } catch (error) {
 
         showValidation(
-            error.data || {
-                errors: [
-                    error.message
-                ]
-            },
+            error.data ||
+                {
+                    errors:
+                        [
+                            error.message
+                        ]
+                },
             "maint-upload-result"
         );
 
@@ -1366,19 +1807,26 @@ async function submitManual(event) {
     }
 }
 
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
 function showValidation(
     data,
     target
 ) {
 
     const element =
-        document.getElementById(target);
+        document.getElementById(
+            target
+        );
 
-    if (!element) {
-        return;
-    }
+    if (!element) return;
 
-    element.innerHTML = `
+
+    element.innerHTML =
+        `
         <div class="validation-box">
 
             <strong>
@@ -1400,54 +1848,73 @@ function showValidation(
                             ) {
 
                                 return `
-                                    <div class="error-row">
-                                        <div>
-                                            ${escapeHtml(error)}
-                                        </div>
-                                    </div>
-                                `;
-                            }
-
-                            return `
                                 <div class="error-row">
-
-                                    <strong>
-                                        Row
-                                        ${escapeHtml(error.row)}
-
-                                        ${
-                                            error.request_id ||
-                                            error.train_id
-                                                ? `
-                                                ·
-                                                ${escapeHtml(
-                                                    error.request_id ||
-                                                    error.train_id
-                                                )}
-                                                `
-                                                : ""
-                                        }
-                                    </strong>
 
                                     <div>
                                         ${escapeHtml(
-                                            (
-                                                error.errors ||
-                                                []
-                                            ).join(" · ")
+                                            error
                                         )}
                                     </div>
 
                                 </div>
+                                `;
+                            }
+
+
+                            return `
+                            <div class="error-row">
+
+                                <strong>
+
+                                    Row
+                                    ${escapeHtml(
+                                        error.row
+                                    )}
+
+                                    ${
+                                        error.request_id ||
+                                        error.train_id
+
+                                            ? `
+                                            ·
+                                            ${escapeHtml(
+                                                error.request_id ||
+                                                error.train_id
+                                            )}
+                                            `
+
+                                            : ""
+                                    }
+
+                                </strong>
+
+                                <div>
+                                    ${escapeHtml(
+                                        (
+                                            error.errors ||
+                                            []
+                                        ).join(
+                                            " · "
+                                        )
+                                    )}
+                                </div>
+
+                            </div>
                             `;
+
                         }
                     )
                     .join("")
             }
 
         </div>
-    `;
+        `;
 }
+
+
+/* =========================================================
+   MAINTENANCE UPLOAD
+   ========================================================= */
 
 async function uploadMaintenance() {
 
@@ -1463,6 +1930,7 @@ async function uploadMaintenance() {
         );
     }
 
+
     const form =
         new FormData();
 
@@ -1471,14 +1939,18 @@ async function uploadMaintenance() {
         file
     );
 
+
     try {
 
         const result =
             await api(
                 "/api/maintenance/upload",
                 {
-                    method: "POST",
-                    body: form
+                    method:
+                        "POST",
+
+                    body:
+                        form
                 }
             );
 
@@ -1491,7 +1963,9 @@ async function uploadMaintenance() {
 
                     ✓
 
-                    ${result.saved}
+                    ${
+                        result.saved
+                    }
 
                     maintenance request(s)
                     accepted and submitted.
@@ -1509,15 +1983,22 @@ async function uploadMaintenance() {
     } catch (error) {
 
         showValidation(
-            error.data || {
-                errors: [
-                    error.message
-                ]
-            },
+            error.data ||
+                {
+                    errors:
+                        [
+                            error.message
+                        ]
+                },
             "maint-upload-result"
         );
     }
 }
+
+
+/* =========================================================
+   TRACK
+   ========================================================= */
 
 function renderTrack() {
 
@@ -1566,10 +2047,16 @@ function renderTrack() {
         `;
 }
 
-async function trackTask(taskId) {
+
+async function trackTask(
+    taskId
+) {
 
     taskId =
-        (taskId || "").trim();
+        (
+            taskId ||
+            ""
+        ).trim();
 
     if (!taskId) {
 
@@ -1578,6 +2065,7 @@ async function trackTask(taskId) {
             "error"
         );
     }
+
 
     try {
 
@@ -1588,7 +2076,9 @@ async function trackTask(taskId) {
 
         $("#track-result")
             .innerHTML =
-            renderTaskDetail(result);
+            renderTaskDetail(
+                result
+            );
 
     } catch (error) {
 
@@ -1604,7 +2094,14 @@ async function trackTask(taskId) {
     }
 }
 
-function renderTaskDetail(result) {
+
+/* =========================================================
+   TASK DETAIL
+   ========================================================= */
+
+function renderTaskDetail(
+    result
+) {
 
     const steps = [
         "SUBMITTED",
@@ -1614,12 +2111,18 @@ function renderTaskDetail(result) {
         "REJECTED"
     ];
 
+
     return `
-    <div style="padding-top:22px">
+    <div
+        style="
+            padding-top:22px;
+        "
+    >
 
         <div class="detail-grid">
 
             <div class="detail">
+
                 <small>
                     Task ID
                 </small>
@@ -1629,10 +2132,12 @@ function renderTaskDetail(result) {
                         result.request_id
                     )}
                 </strong>
+
             </div>
 
 
             <div class="detail">
+
                 <small>
                     Status
                 </small>
@@ -1642,10 +2147,12 @@ function renderTaskDetail(result) {
                         result.status
                     )}
                 </strong>
+
             </div>
 
 
             <div class="detail">
+
                 <small>
                     Department
                 </small>
@@ -1655,10 +2162,12 @@ function renderTaskDetail(result) {
                         result.department
                     )}
                 </strong>
+
             </div>
 
 
             <div class="detail">
+
                 <small>
                     Section
                 </small>
@@ -1668,6 +2177,7 @@ function renderTaskDetail(result) {
                         result.section_id
                     )}
                 </strong>
+
             </div>
 
         </div>
@@ -1681,11 +2191,13 @@ function renderTaskDetail(result) {
                         (step, index) => {
 
                             const active =
-                                result.status === step ||
+                                result.status ===
+                                step ||
                                 (
                                     result.status ===
                                         "APPROVED" &&
-                                    step !== "REJECTED" &&
+                                    step !==
+                                        "REJECTED" &&
                                     index < 3
                                 ) ||
                                 (
@@ -1698,23 +2210,27 @@ function renderTaskDetail(result) {
                                     index < 2
                                 );
 
+
                             return `
-                                <div
-                                    class="
-                                        step
-                                        ${
-                                            active
-                                                ? "done"
-                                                : ""
-                                        }
-                                    "
-                                >
-                                    ${step.replaceAll(
+                            <div
+                                class="
+                                    step
+                                    ${
+                                        active
+                                            ? "done"
+                                            : ""
+                                    }
+                                "
+                            >
+                                ${
+                                    step.replaceAll(
                                         "_",
                                         " "
-                                    )}
-                                </div>
+                                    )
+                                }
+                            </div>
                             `;
+
                         }
                     )
                     .join("")
@@ -1726,6 +2242,7 @@ function renderTaskDetail(result) {
         <div class="detail-grid">
 
             <div class="detail">
+
                 <small>
                     Work
                 </small>
@@ -1735,15 +2252,18 @@ function renderTaskDetail(result) {
                         result.work_description
                     )}
                 </strong>
+
             </div>
 
 
             <div class="detail">
+
                 <small>
                     Asset
                 </small>
 
                 <strong>
+
                     ${escapeHtml(
                         result.asset_id
                     )}
@@ -1753,11 +2273,14 @@ function renderTaskDetail(result) {
                     ${escapeHtml(
                         result.asset_type
                     )}
+
                 </strong>
+
             </div>
 
 
             <div class="detail">
+
                 <small>
                     Priority inputs
                 </small>
@@ -1776,11 +2299,14 @@ function renderTaskDetail(result) {
 
                     /
 
-                    safety=${escapeHtml(
+                    safety=
+
+                    ${escapeHtml(
                         result.safety_related
                     )}
 
                 </strong>
+
             </div>
 
 
@@ -1804,12 +2330,14 @@ function renderTaskDetail(result) {
 
                     ${
                         result.preferred_end_time
+
                             ? `
-                                →
-                                ${escapeHtml(
-                                    result.preferred_end_time
-                                )}
+                            →
+                            ${escapeHtml(
+                                result.preferred_end_time
+                            )}
                             `
+
                             : ""
                     }
 
@@ -1822,6 +2350,7 @@ function renderTaskDetail(result) {
 
         ${
             result.rejection_reason
+
                 ? `
                 <div class="validation-box">
 
@@ -1837,12 +2366,14 @@ function renderTaskDetail(result) {
 
                 </div>
                 `
+
                 : ""
         }
 
 
         ${
             result.block_id
+
                 ? `
                 <div class="form-actions">
 
@@ -1861,6 +2392,7 @@ function renderTaskDetail(result) {
 
                 </div>
                 `
+
                 : ""
         }
 
@@ -1868,22 +2400,35 @@ function renderTaskDetail(result) {
     `;
 }
 
-/* Continue using the remaining functions from the corrected
-   application file for COA, blocks, approvals, notifications,
-   modal handling, template downloads, login and demo data. */
+
+/* =========================================================
+   COA
+   ========================================================= */
 
 async function renderCOA() {
-    const data = await api("/api/coa/uploads");
 
-    main.innerHTML = `
+    const data =
+        await api(
+            "/api/coa/uploads"
+        );
+
+
+    main.innerHTML =
+        `
         <section class="panel">
 
             <div class="section-title">
-                <h3>COA train schedule</h3>
+
+                <h3>
+                    COA train schedule
+                </h3>
+
                 <span>
                     Upload and review schedules
                 </span>
+
             </div>
+
 
             <div class="upload-zone">
 
@@ -1891,15 +2436,20 @@ async function renderCOA() {
                     TRAIN OPERATIONS
                 </div>
 
-                <h3 style="margin:8px 0">
+                <h3
+                    style="margin:8px 0"
+                >
                     Upload COA schedule
                 </h3>
 
                 <p class="muted">
+
                     Rows are validated against
                     section master, time format,
                     dates and duplicate Train IDs.
+
                 </p>
+
 
                 <label for="coa-file">
                     Choose CSV / XLSX
@@ -1911,6 +2461,7 @@ async function renderCOA() {
                     accept=".csv,.xlsx,.xlsm"
                 >
 
+
                 <div
                     class="upload-info"
                     id="coa-file-name"
@@ -1918,12 +2469,15 @@ async function renderCOA() {
                     No file selected
                 </div>
 
+
                 <div class="form-actions">
 
                     <button
                         class="secondary"
                         type="button"
-                        onclick="downloadCOATemplate()"
+                        onclick="
+                            downloadCOATemplate()
+                        "
                     >
                         Download template
                     </button>
@@ -1940,19 +2494,25 @@ async function renderCOA() {
 
             </div>
 
+
             <div id="coa-result"></div>
+
 
             <div
                 class="section-title"
                 style="margin-top:28px"
             >
+
                 <h3>
                     Uploaded schedules
                 </h3>
+
                 <span>
                     Most recent first
                 </span>
+
             </div>
+
 
             <div class="request-list">
 
@@ -1974,20 +2534,30 @@ async function renderCOA() {
                                             </span>
 
                                             <span class="pill">
-                                                ${upload.row_count}
+
+                                                ${
+                                                    upload.row_count
+                                                }
+
                                                 trains
+
                                             </span>
 
                                         </div>
 
+
                                         <div class="block-meta">
+
                                             ${escapeHtml(
                                                 upload.filename
                                             )}
+
                                             · uploaded by
+
                                             ${escapeHtml(
                                                 upload.uploaded_by
                                             )}
+
                                         </div>
 
                                     </div>
@@ -1996,7 +2566,9 @@ async function renderCOA() {
                                 `
                         )
                         .join("")
+
                     ||
+
                     `
                     <div class="empty">
                         No uploads yet.
@@ -2007,10 +2579,12 @@ async function renderCOA() {
             </div>
 
         </section>
-    `;
+        `;
+
 
     $("#coa-file").onchange =
         () => {
+
             $("#coa-file-name")
                 .textContent =
                 $("#coa-file")
@@ -2020,6 +2594,11 @@ async function renderCOA() {
         };
 }
 
+
+/* =========================================================
+   COA UPLOAD
+   ========================================================= */
+
 async function uploadCOA() {
 
     const file =
@@ -2027,11 +2606,13 @@ async function uploadCOA() {
             .files[0];
 
     if (!file) {
+
         return toast(
             "Select a COA file first",
             "error"
         );
     }
+
 
     const form =
         new FormData();
@@ -2041,16 +2622,21 @@ async function uploadCOA() {
         file
     );
 
+
     try {
 
         const result =
             await api(
                 "/api/coa/upload",
                 {
-                    method: "POST",
-                    body: form
+                    method:
+                        "POST",
+
+                    body:
+                        form
                 }
             );
+
 
         $("#coa-result")
             .innerHTML =
@@ -2059,33 +2645,56 @@ async function uploadCOA() {
 
                 <div class="success-text">
 
-                    ✓ ${result.saved}
-                    train rows accepted.
+                    ✓
+
+                    ${
+                        result.saved
+                    }
+
+                    train rows accepted for
+
+                    ${escapeHtml(
+                        (
+                            result.planning_dates ||
+                            []
+                        ).join(
+                            ", "
+                        )
+                    )}
 
                 </div>
 
             </div>
             `;
 
+
         toast(
             "COA schedule accepted",
             "success"
         );
+
 
         await renderCOA();
 
     } catch (error) {
 
         showValidation(
-            error.data || {
-                errors: [
-                    error.message
-                ]
-            },
+            error.data ||
+                {
+                    errors:
+                        [
+                            error.message
+                        ]
+                },
             "coa-result"
         );
     }
 }
+
+
+/* =========================================================
+   BLOCKS
+   ========================================================= */
 
 async function renderBlocks() {
 
@@ -2095,7 +2704,18 @@ async function renderBlocks() {
         );
 
     state.blocks =
-        result.blocks || [];
+        result.blocks ||
+        [];
+
+
+    const title =
+        state.user.department ===
+        "TDMS"
+
+            ? "Recommended blocks"
+
+            : "Blocks";
+
 
     main.innerHTML =
         `
@@ -2104,12 +2724,7 @@ async function renderBlocks() {
             <div class="section-title">
 
                 <h3>
-                    ${
-                        state.user.department ===
-                        "TDMS"
-                            ? "Recommended blocks"
-                            : "Blocks"
-                    }
+                    ${title}
                 </h3>
 
                 <span>
@@ -2121,13 +2736,17 @@ async function renderBlocks() {
 
             </div>
 
-            ${renderBlockCards(
-                state.blocks,
-                state.user.department ===
+
+            ${
+                renderBlockCards(
+                    state.blocks,
+                    state.user.department ===
                     "BDMS"
-            )}
+                )
+            }
 
         </section>
+
 
         <section
             class="panel"
@@ -2147,23 +2766,35 @@ async function renderBlocks() {
 
             </div>
 
-            ${renderTimeline(
-                state.blocks
-            )}
+
+            ${
+                renderTimeline(
+                    state.blocks
+                )
+            }
 
         </section>
         `;
 }
 
-function renderTimeline(blocks) {
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+function renderTimeline(
+    blocks
+) {
 
     if (!blocks.length) {
+
         return `
-            <div class="empty">
-                No schedule data.
-            </div>
+        <div class="empty">
+            No schedule data.
+        </div>
         `;
     }
+
 
     const sections =
         [
@@ -2174,6 +2805,7 @@ function renderTimeline(blocks) {
                 )
             )
         ].sort();
+
 
     const head = [
         "",
@@ -2191,7 +2823,9 @@ function renderTimeline(blocks) {
         "22"
     ];
 
-    let html = `
+
+    let html =
+        `
         <div class="timeline">
 
             <div class="timeline-grid">
@@ -2218,7 +2852,8 @@ function renderTimeline(blocks) {
                             `
                     )
                     .join("")}
-    `;
+        `;
+
 
     for (
         const section of sections
@@ -2231,10 +2866,15 @@ function renderTimeline(blocks) {
                     section
             );
 
-        html += `
+
+        html +=
+            `
             <div class="timeline-label">
-                ${escapeHtml(section)}
+                ${escapeHtml(
+                    section
+                )}
             </div>
+
 
             <div class="bar-wrap">
 
@@ -2274,6 +2914,7 @@ function renderTimeline(blocks) {
                                         ) * 100
                                     );
 
+
                                 return `
                                 <div
                                     class="
@@ -2298,44 +2939,62 @@ function renderTimeline(blocks) {
                                         block.block_id
                                     )}"
                                 >
-                                    ${escapeHtml(
-                                        block.block_id
-                                    )}
+                                    ${
+                                        escapeHtml(
+                                            block.block_id
+                                        )
+                                    }
+
                                     ·
-                                    ${escapeHtml(
-                                        block.priority
-                                    )}
+
+                                    ${
+                                        escapeHtml(
+                                            block.priority
+                                        )
+                                    }
                                 </div>
                                 `;
+
                             }
                         )
                         .join("")
                 }
 
             </div>
-        `;
+            `;
     }
 
-    html += `
+
+    html +=
+        `
             </div>
         </div>
-    `;
+        `;
+
 
     return html;
 }
 
-function mins(time) {
 
-    const parts =
-        String(time)
+function mins(
+    time
+) {
+
+    const [hour, minute] =
+        time
             .split(":")
             .map(Number);
 
     return (
-        parts[0] * 60 +
-        parts[1]
+        hour * 60 +
+        minute
     );
 }
+
+
+/* =========================================================
+   APPROVALS
+   ========================================================= */
 
 async function renderApprovals() {
 
@@ -2343,6 +3002,7 @@ async function renderApprovals() {
         await api(
             `/api/blocks?planning_date=${state.planningDate}&status=PENDING_APPROVAL`
         );
+
 
     main.innerHTML =
         `
@@ -2355,11 +3015,14 @@ async function renderApprovals() {
                 </h3>
 
                 <span>
-                    ${result.blocks.length}
+                    ${
+                        result.blocks.length
+                    }
                     block(s)
                 </span>
 
             </div>
+
 
             ${
                 renderBlockCards(
@@ -2372,7 +3035,14 @@ async function renderApprovals() {
         `;
 }
 
-async function openBlock(id) {
+
+/* =========================================================
+   OPEN BLOCK
+   ========================================================= */
+
+async function openBlock(
+    id
+) {
 
     try {
 
@@ -2396,7 +3066,14 @@ async function openBlock(id) {
     }
 }
 
-function renderBlockModal(block) {
+
+/* =========================================================
+   BLOCK MODAL
+   ========================================================= */
+
+function renderBlockModal(
+    block
+) {
 
     return `
     <div class="modal-head">
@@ -2511,7 +3188,13 @@ function renderBlockModal(block) {
 
                 ${
                     block.existing_block
-                        ? "Yes"
+
+                        ? "Yes · " +
+                            escapeHtml(
+                                block.block_calendar_id ||
+                                ""
+                            )
+
                         : "No existing block matched"
                 }
 
@@ -2528,7 +3211,9 @@ function renderBlockModal(block) {
 
             <strong>
 
-                ${block.duration_minutes}
+                ${
+                    block.duration_minutes
+                }
 
                 minutes
 
@@ -2549,7 +3234,9 @@ function renderBlockModal(block) {
         </h3>
 
         <span>
-            ${block.tasks.length}
+            ${
+                block.tasks.length
+            }
             task(s)
         </span>
 
@@ -2674,6 +3361,46 @@ function renderBlockModal(block) {
 
                                 </div>
 
+
+                                <div class="detail">
+
+                                    <small>
+                                        Defect / risk
+                                    </small>
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                                            task.defect_severity
+                                        )}
+
+                                        /
+
+                                        ${escapeHtml(
+                                            task.failure_risk
+                                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail">
+
+                                    <small>
+                                        Operational status
+                                    </small>
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                                            task.asset_operational_status
+                                        )}
+
+                                    </strong>
+
+                                </div>
+
                             </div>
 
                         </div>
@@ -2707,6 +3434,7 @@ function renderBlockModal(block) {
                     Modify
                 </button>
 
+
                 <button
                     class="danger-button"
                     onclick="
@@ -2719,6 +3447,7 @@ function renderBlockModal(block) {
                 >
                     Reject
                 </button>
+
 
                 <button
                     class="primary"
@@ -2735,12 +3464,20 @@ function renderBlockModal(block) {
 
             </div>
             `
+
             : ""
     }
     `;
 }
 
-async function openModify(id) {
+
+/* =========================================================
+   MODIFY
+   ========================================================= */
+
+async function openModify(
+    id
+) {
 
     try {
 
@@ -2764,7 +3501,10 @@ async function openModify(id) {
     }
 }
 
-function renderModifyModal(result) {
+
+function renderModifyModal(
+    result
+) {
 
     return `
     <div class="modal-head">
@@ -2776,12 +3516,39 @@ function renderModifyModal(result) {
             </div>
 
             <h3>
+
                 ${escapeHtml(
                     result.block.block_id
                 )}
+
             </h3>
 
+            <div class="muted">
+
+                Current
+
+                ${escapeHtml(
+                    result.block.start_time
+                )}
+
+                →
+
+                ${escapeHtml(
+                    result.block.end_time
+                )}
+
+                ·
+
+                ${
+                    result.block.duration_minutes
+                }
+
+                min
+
+            </div>
+
         </div>
+
 
         <button
             class="close-btn"
@@ -2789,6 +3556,39 @@ function renderModifyModal(result) {
         >
             ✕
         </button>
+
+    </div>
+
+
+    <div class="validation-box">
+
+        <div>
+
+            <strong>
+                Select a feasible alternative slot
+            </strong>
+
+        </div>
+
+
+        ${
+            result.constraints
+                .map(
+                    constraint =>
+                        `
+                        <div
+                            class="muted"
+                            style="margin-top:5px"
+                        >
+                            •
+                            ${escapeHtml(
+                                constraint
+                            )}
+                        </div>
+                        `
+                )
+                .join("")
+        }
 
     </div>
 
@@ -2831,6 +3631,7 @@ function renderModifyModal(result) {
 
                             </div>
 
+
                             <button
                                 class="small-btn"
                                 onclick="
@@ -2854,7 +3655,9 @@ function renderModifyModal(result) {
                         `
                 )
                 .join("")
+
             ||
+
             `
             <div class="empty">
                 No alternative feasible
@@ -2866,6 +3669,11 @@ function renderModifyModal(result) {
     </div>
     `;
 }
+
+
+/* =========================================================
+   APPLY MODIFICATION
+   ========================================================= */
 
 async function applyModify(
     id,
@@ -2879,6 +3687,7 @@ async function applyModify(
             "BDMS manual adjustment"
         );
 
+
     try {
 
         await api(
@@ -2888,13 +3697,21 @@ async function applyModify(
                     "POST",
 
                 body:
-                    JSON.stringify({
-                        start_time: start,
-                        end_time: end,
-                        reason: reason || ""
-                    })
+                    JSON.stringify(
+                        {
+                            start_time:
+                                start,
+
+                            end_time:
+                                end,
+
+                            reason:
+                                reason || ""
+                        }
+                    )
             }
         );
+
 
         toast(
             "Block modified and returned to pending approval",
@@ -2902,6 +3719,7 @@ async function applyModify(
         );
 
         closeModal();
+
         renderPage();
 
     } catch (error) {
@@ -2913,16 +3731,25 @@ async function applyModify(
     }
 }
 
-async function approveBlock(id) {
+
+/* =========================================================
+   APPROVE
+   ========================================================= */
+
+async function approveBlock(
+    id
+) {
 
     try {
 
         await api(
             `/api/blocks/${encodeURIComponent(id)}/approve`,
             {
-                method: "POST"
+                method:
+                    "POST"
             }
         );
+
 
         toast(
             "Block approved and all departments notified",
@@ -2930,7 +3757,9 @@ async function approveBlock(id) {
         );
 
         closeModal();
+
         renderPage();
+
         refreshNotifications();
 
     } catch (error) {
@@ -2942,7 +3771,14 @@ async function approveBlock(id) {
     }
 }
 
-async function rejectBlock(id) {
+
+/* =========================================================
+   REJECT
+   ========================================================= */
+
+async function rejectBlock(
+    id
+) {
 
     const reason =
         prompt(
@@ -2950,9 +3786,9 @@ async function rejectBlock(id) {
             "Block requires further review"
         );
 
-    if (!reason) {
-        return;
-    }
+
+    if (!reason) return;
+
 
     try {
 
@@ -2963,11 +3799,14 @@ async function rejectBlock(id) {
                     "POST",
 
                 body:
-                    JSON.stringify({
-                        reason
-                    })
+                    JSON.stringify(
+                        {
+                            reason
+                        }
+                    )
             }
         );
+
 
         toast(
             "Block rejected",
@@ -2975,6 +3814,7 @@ async function rejectBlock(id) {
         );
 
         closeModal();
+
         renderPage();
 
     } catch (error) {
@@ -2986,12 +3826,18 @@ async function rejectBlock(id) {
     }
 }
 
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
 async function renderNotifications() {
 
     const result =
         await api(
             "/api/notifications"
         );
+
 
     main.innerHTML =
         `
@@ -3034,13 +3880,17 @@ async function renderNotifications() {
                                     <div class="block-top">
 
                                         <span class="pill">
+
                                             ${escapeHtml(
                                                 notification.title
                                             )}
+
                                         </span>
+
 
                                         ${
                                             !notification.is_read
+
                                                 ? `
                                                 <span
                                                     class="
@@ -3051,6 +3901,7 @@ async function renderNotifications() {
                                                     NEW
                                                 </span>
                                                 `
+
                                                 : ""
                                         }
 
@@ -3065,9 +3916,11 @@ async function renderNotifications() {
                                             line-height:1.5;
                                         "
                                     >
+
                                         ${escapeHtml(
                                             notification.message
                                         )}
+
                                     </div>
 
 
@@ -3077,14 +3930,17 @@ async function renderNotifications() {
                                             margin-top:8px
                                         "
                                     >
+
                                         ${escapeHtml(
                                             notification.created_at
                                         )}
+
                                     </div>
 
 
                                     ${
                                         !notification.is_read
+
                                             ? `
                                             <div class="form-actions">
 
@@ -3101,6 +3957,7 @@ async function renderNotifications() {
 
                                             </div>
                                             `
+
                                             : ""
                                     }
 
@@ -3108,7 +3965,9 @@ async function renderNotifications() {
                                 `
                         )
                         .join("")
+
                     ||
+
                     `
                     <div class="empty">
                         No alerts.
@@ -3122,6 +3981,11 @@ async function renderNotifications() {
         `;
 }
 
+
+/* =========================================================
+   REFRESH NOTIFICATIONS
+   ========================================================= */
+
 async function refreshNotifications() {
 
     try {
@@ -3130,6 +3994,7 @@ async function refreshNotifications() {
             await api(
                 "/api/notifications"
             );
+
 
         const unread =
             (
@@ -3142,12 +4007,12 @@ async function refreshNotifications() {
                 )
                 .length;
 
+
         const badge =
             $("#notify-count");
 
-        if (!badge) {
-            return;
-        }
+        if (!badge) return;
+
 
         badge.textContent =
             unread;
@@ -3158,28 +4023,48 @@ async function refreshNotifications() {
                 : "none";
 
     } catch {
-        /* Non-critical */
+        /* Notification refresh is non-critical */
     }
 }
 
-async function markRead(id) {
+
+/* =========================================================
+   MARK READ
+   ========================================================= */
+
+async function markRead(
+    id
+) {
 
     await api(
         `/api/notifications/${id}/read`,
         {
-            method: "POST"
+            method:
+                "POST"
         }
     );
 
     renderPage();
+
     refreshNotifications();
 }
 
+
+/* =========================================================
+   GLOBAL CONTROLS
+   ========================================================= */
+
 $("#notify-button").onclick =
-    () => go("notifications");
+    () =>
+        go(
+            "notifications"
+        );
+
 
 $("#refresh-button").onclick =
-    () => renderPage();
+    () =>
+        renderPage();
+
 
 $("#planning-date").onchange =
     (event) => {
@@ -3195,8 +4080,15 @@ $("#planning-date").onchange =
         renderPage();
     };
 
+
 $("#logout-button").onclick =
-    () => logout(true);
+    () =>
+        logout(true);
+
+
+/* =========================================================
+   GENERATE PLAN
+   ========================================================= */
 
 async function generatePlan() {
 
@@ -3206,15 +4098,19 @@ async function generatePlan() {
             await api(
                 "/api/planning/generate",
                 {
-                    method: "POST",
+                    method:
+                        "POST",
 
                     body:
-                        JSON.stringify({
-                            planning_date:
-                                state.planningDate
-                        })
+                        JSON.stringify(
+                            {
+                                planning_date:
+                                    state.planningDate
+                            }
+                        )
                 }
             );
+
 
         toast(
             `${
@@ -3224,13 +4120,18 @@ async function generatePlan() {
             "success"
         );
 
+
         go(
             state.user.department ===
                 "TDMS"
+
                 ? "blocks"
+
                 : state.user.department ===
                     "BDMS"
+
                     ? "approvals"
+
                     : "dashboard"
         );
 
@@ -3243,7 +4144,14 @@ async function generatePlan() {
     }
 }
 
-function openModal(html) {
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+function openModal(
+    html
+) {
 
     $("#modal-root")
         .innerHTML =
@@ -3258,6 +4166,7 @@ function openModal(html) {
 
         </div>
         `;
+
 
     $("#modal-root")
         .querySelector(
@@ -3276,8 +4185,10 @@ function openModal(html) {
 
                 closeModal();
             }
+
         };
 }
+
 
 function closeModal() {
 
@@ -3285,6 +4196,11 @@ function closeModal() {
         .innerHTML =
         "";
 }
+
+
+/* =========================================================
+   MAINTENANCE TEMPLATE
+   ========================================================= */
 
 async function downloadMaintenanceTemplate() {
 
@@ -3294,7 +4210,8 @@ async function downloadMaintenanceTemplate() {
             await fetch(
                 "/api/templates/maintenance",
                 {
-                    method: "GET",
+                    method:
+                        "GET",
 
                     headers: {
                         Authorization:
@@ -3303,7 +4220,11 @@ async function downloadMaintenanceTemplate() {
                 }
             );
 
-        if (response.status === 401) {
+
+        if (
+            response.status ===
+            401
+        ) {
 
             logout(false);
 
@@ -3312,10 +4233,12 @@ async function downloadMaintenanceTemplate() {
             );
         }
 
+
         if (!response.ok) {
 
             let message =
                 "Unable to download template";
+
 
             try {
 
@@ -3328,18 +4251,22 @@ async function downloadMaintenanceTemplate() {
 
             } catch {}
 
+
             throw new Error(
                 message
             );
         }
 
+
         const blob =
             await response.blob();
+
 
         const url =
             URL.createObjectURL(
                 blob
             );
+
 
         const link =
             document.createElement(
@@ -3360,9 +4287,11 @@ async function downloadMaintenanceTemplate() {
 
         link.remove();
 
+
         URL.revokeObjectURL(
             url
         );
+
 
         toast(
             "Maintenance template downloaded",
@@ -3378,6 +4307,11 @@ async function downloadMaintenanceTemplate() {
     }
 }
 
+
+/* =========================================================
+   COA TEMPLATE
+   ========================================================= */
+
 async function downloadCOATemplate() {
 
     try {
@@ -3386,7 +4320,8 @@ async function downloadCOATemplate() {
             await fetch(
                 "/api/templates/coa",
                 {
-                    method: "GET",
+                    method:
+                        "GET",
 
                     headers: {
                         Authorization:
@@ -3395,7 +4330,11 @@ async function downloadCOATemplate() {
                 }
             );
 
-        if (response.status === 401) {
+
+        if (
+            response.status ===
+            401
+        ) {
 
             logout(false);
 
@@ -3404,10 +4343,12 @@ async function downloadCOATemplate() {
             );
         }
 
+
         if (!response.ok) {
 
             let message =
                 "Unable to download COA template";
+
 
             try {
 
@@ -3420,18 +4361,22 @@ async function downloadCOATemplate() {
 
             } catch {}
 
+
             throw new Error(
                 message
             );
         }
 
+
         const blob =
             await response.blob();
+
 
         const url =
             URL.createObjectURL(
                 blob
             );
+
 
         const link =
             document.createElement(
@@ -3452,9 +4397,11 @@ async function downloadCOATemplate() {
 
         link.remove();
 
+
         URL.revokeObjectURL(
             url
         );
+
 
         toast(
             "COA template downloaded",
@@ -3470,11 +4417,17 @@ async function downloadCOATemplate() {
     }
 }
 
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
 $("#login-form")
     .onsubmit =
     async (event) => {
 
         event.preventDefault();
+
 
         try {
 
@@ -3482,33 +4435,38 @@ $("#login-form")
                 await api(
                     "/api/auth/login",
                     {
-                        method: "POST",
+                        method:
+                            "POST",
 
                         body:
-                            JSON.stringify({
-                                department:
-                                    $(
-                                        "#login-department"
-                                    ).value,
+                            JSON.stringify(
+                                {
+                                    department:
+                                        $(
+                                            "#login-department"
+                                        ).value,
 
-                                user_id:
-                                    $(
-                                        "#login-user"
-                                    ).value,
+                                    user_id:
+                                        $(
+                                            "#login-user"
+                                        ).value,
 
-                                password:
-                                    $(
-                                        "#login-password"
-                                    ).value
-                            })
+                                    password:
+                                        $(
+                                            "#login-password"
+                                        ).value
+                                }
+                            )
                     }
                 );
+
 
             state.token =
                 result.token;
 
             state.user =
                 result.user;
+
 
             localStorage.setItem(
                 "vx_token",
@@ -3522,10 +4480,12 @@ $("#login-form")
                 )
             );
 
+
             toast(
                 "Signed in",
                 "success"
             );
+
 
             showApp();
 
@@ -3538,19 +4498,36 @@ $("#login-form")
         }
     };
 
+
+/* =========================================================
+   INITIAL APPLICATION LOAD
+   ========================================================= */
+
 if (
     state.token &&
     state.user
 ) {
 
-    api("/api/me")
-        .then(showApp)
-        .catch(showLogin);
+    api(
+        "/api/me"
+    )
+        .then(
+            showApp
+        )
+        .catch(
+            () =>
+                showLogin()
+        );
 
 } else {
 
     showLogin();
 }
+
+
+/* =========================================================
+   GLOBAL FUNCTIONS
+   ========================================================= */
 
 window.go =
     go;
@@ -3591,6 +4568,11 @@ window.uploadCOA =
 window.mins =
     mins;
 
+
+/* =========================================================
+   DEMO DATA
+   ========================================================= */
+
 async function loadDemo() {
 
     try {
@@ -3599,9 +4581,11 @@ async function loadDemo() {
             await api(
                 "/api/demo/load",
                 {
-                    method: "POST"
+                    method:
+                        "POST"
                 }
             );
+
 
         toast(
             `${
@@ -3610,6 +4594,7 @@ async function loadDemo() {
             } demo requests ready`,
             "success"
         );
+
 
         renderPage();
 
@@ -3622,11 +4607,50 @@ async function loadDemo() {
     }
 }
 
+
 window.loadDemo =
     loadDemo;
+
 
 window.downloadMaintenanceTemplate =
     downloadMaintenanceTemplate;
 
+
 window.downloadCOATemplate =
     downloadCOATemplate;
+
+/* =========================================================
+   DISPLAY MODE TOGGLE
+   ========================================================= */
+
+(function initVisionXpressModeButton() {
+    const modeButton = document.getElementById("mode-button");
+    if (!modeButton) return;
+
+    const storageKey = "vx_display_mode";
+
+    function applyMode(mode) {
+        const dark = mode === "dark";
+        document.body.classList.toggle("dark-mode", dark);
+        modeButton.textContent = dark ? "Light" : "Mode";
+        modeButton.setAttribute(
+            "aria-label",
+            dark ? "Switch to light mode" : "Switch to dark mode"
+        );
+        modeButton.title = dark
+            ? "Switch to light mode"
+            : "Switch to dark mode";
+    }
+
+    const savedMode = localStorage.getItem(storageKey) || "light";
+    applyMode(savedMode);
+
+    modeButton.addEventListener("click", function () {
+        const nextMode = document.body.classList.contains("dark-mode")
+            ? "light"
+            : "dark";
+
+        localStorage.setItem(storageKey, nextMode);
+        applyMode(nextMode);
+    });
+})();
