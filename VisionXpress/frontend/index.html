@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch theme">◐ <span>Theme</span></button>
   <div id="toast-root"></div>
+
   <section id="login-view" class="login-shell">
     <div class="login-hero">
       <div class="brand-mark">VX</div>
@@ -70,5 +72,24 @@
 
   <div id="modal-root"></div>
   <script src="/app.js"></script>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const saved = localStorage.getItem('vx_theme');
+      root.dataset.theme = saved === 'dark' ? 'dark' : 'light';
+      const button = document.getElementById('theme-toggle');
+      const update = () => {
+        const dark = root.dataset.theme === 'dark';
+        button.innerHTML = dark ? '☼ <span>Light</span>' : '◐ <span>Dark</span>';
+        button.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      };
+      button.onclick = () => {
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('vx_theme', root.dataset.theme);
+        update();
+      };
+      update();
+    })();
+  </script>
 </body>
 </html>
