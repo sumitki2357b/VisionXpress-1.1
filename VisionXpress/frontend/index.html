@@ -1,1109 +1,634 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
 
-  <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <meta
+        name="theme-color"
+        content="#0b3d5c"
+    >
 
-  <title>
-    VisionXpress | Smart Maintenance Block Planning
-  </title>
+    <title>
+        VisionXpress | Railway Maintenance Control Desk
+    </title>
 
-  <link
-    rel="stylesheet"
-    href="/styles.css"
-  >
-
+    <link
+        rel="stylesheet"
+        href="/styles.css"
+    >
 </head>
-
 
 <body>
 
-  <!-- =========================================================
-       GLOBAL THEME BUTTON
-       ========================================================= -->
+    <!-- =====================================================
+         LOGIN VIEW
+         ===================================================== -->
 
-  <button
-    id="theme-toggle"
-    class="theme-toggle"
-    type="button"
-  >
-    <span class="theme-icon">☾</span>
-    <span class="theme-label">Dark Mode</span>
-  </button>
+    <section
+        id="login-view"
+        class="login-view"
+    >
 
+        <div class="login-card">
 
-  <!-- =========================================================
-       LOGIN
-       ========================================================= -->
+            <div class="login-card-header">
 
-  <section
-    id="login-view"
-    class="login-shell"
-  >
+                <div class="login-brand">
 
-    <div class="login-page">
+                    <div class="login-brand-mark">
+                        VX
+                    </div>
 
+                    <div class="login-brand-copy">
 
-      <!-- TOP BRAND -->
+                        <div class="login-brand-title">
+                            VisionXpress
+                        </div>
 
-      <header class="login-header">
+                        <div class="login-brand-subtitle">
+                            Smart Rail Maintenance Block Planning
+                        </div>
 
-        <div class="brand-logo">
-          VX
-        </div>
+                    </div>
 
-        <div class="brand-copy">
-
-          <div class="brand-title">
-            VisionXpress
-          </div>
-
-          <div class="brand-subtitle">
-            SMART RAIL MAINTENANCE BLOCK PLANNING
-          </div>
-
-        </div>
-
-      </header>
+                </div>
 
 
-      <!-- LOGIN CONTENT -->
-
-      <div class="login-layout">
+                <div class="login-separator"></div>
 
 
-        <!-- LEFT INFORMATION -->
+                <div class="login-kicker">
+                    SECURE OPERATIONS ACCESS
+                </div>
 
-        <section class="login-information">
+                <h1>
+                    Sign in to Control Desk
+                </h1>
 
-          <div class="railway-label">
-            INDIAN RAILWAY MAINTENANCE CONTROL
-          </div>
-
-          <h1>
-            One control desk for
-            <span>smarter block planning.</span>
-          </h1>
-
-          <p>
-            Coordinate maintenance requirements, operational constraints
-            and departmental work through one integrated planning workflow.
-          </p>
-
-
-          <div class="login-process">
-
-            <div class="process-step">
-
-              <div class="process-number">
-                01
-              </div>
-
-              <div>
-                <strong>
-                  Maintenance
-                </strong>
-
-                <small>
-                  Requests & asset requirements
-                </small>
-              </div>
+                <p>
+                    Plan maintenance work around railway
+                    operations with one coordinated control desk.
+                </p>
 
             </div>
 
 
-            <div class="process-line"></div>
-
-
-            <div class="process-step">
-
-              <div class="process-number">
-                02
-              </div>
-
-              <div>
-                <strong>
-                  Planning
-                </strong>
-
-                <small>
-                  Priority & feasible windows
-                </small>
-              </div>
-
-            </div>
-
-
-            <div class="process-line"></div>
-
-
-            <div class="process-step">
-
-              <div class="process-number">
-                03
-              </div>
-
-              <div>
-                <strong>
-                  Coordination
-                </strong>
-
-                <small>
-                  Common maintenance blocks
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <div class="process-line"></div>
-
-
-            <div class="process-step">
-
-              <div class="process-number">
-                04
-              </div>
-
-              <div>
-                <strong>
-                  Approval
-                </strong>
-
-                <small>
-                  BDMS decision workflow
-                </small>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="login-note">
-
-            <span class="note-mark">
-              ✓
-            </span>
-
-            <div>
-
-              <strong>
-                Integrated planning environment
-              </strong>
-
-              <small>
-                Designed for departmental maintenance coordination
-              </small>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- LOGIN CARD -->
-
-        <section class="login-card">
-
-
-          <div class="login-card-header">
-
-            <div>
-
-              <div class="section-label">
-                CONTROL DESK ACCESS
-              </div>
-
-              <h2>
-                Department Login
-              </h2>
-
-              <p>
-                Select your department to continue.
-              </p>
-
-            </div>
-
-
-            <div class="online-badge">
-
-              <span></span>
-
-              ONLINE
-
-            </div>
-
-          </div>
-
-
-          <div class="login-divider"></div>
-
-
-          <form id="login-form">
-
-
-            <!-- DEPARTMENT -->
-
-            <div class="login-field">
-
-              <label>
-                Department / Block Type
-              </label>
-
-
-              <div class="department-grid">
-
-
-                <button
-                  type="button"
-                  class="department-option active"
-                  data-department="TMS"
-                >
-
-                  <span class="department-code">
-                    TMS
-                  </span>
-
-                  <span class="department-name">
-                    Track Maintenance
-                  </span>
-
-                </button>
-
-
-                <button
-                  type="button"
-                  class="department-option"
-                  data-department="TDMS"
-                >
-
-                  <span class="department-code">
-                    TDMS
-                  </span>
-
-                  <span class="department-name">
-                    Track Development
-                  </span>
-
-                </button>
-
-
-                <button
-                  type="button"
-                  class="department-option"
-                  data-department="SMMS"
-                >
-
-                  <span class="department-code">
-                    SMMS
-                  </span>
-
-                  <span class="department-name">
-                    Signal & Telecom
-                  </span>
-
-                </button>
-
-
-                <button
-                  type="button"
-                  class="department-option"
-                  data-department="COA"
-                >
-
-                  <span class="department-code">
-                    COA
-                  </span>
-
-                  <span class="department-name">
-                    Control Office
-                  </span>
-
-                </button>
-
-
-                <button
-                  type="button"
-                  class="department-option"
-                  data-department="BDMS"
-                >
-
-                  <span class="department-code">
-                    BDMS
-                  </span>
-
-                  <span class="department-name">
-                    Block Approval
-                  </span>
-
-                </button>
-
-              </div>
-
-
-              <!-- Existing application compatibility -->
-
-              <select
-                id="login-department"
-                class="hidden-department-select"
-                aria-hidden="true"
-              >
-
-                <option value="TMS">TMS</option>
-                <option value="TDMS">TDMS</option>
-                <option value="SMMS">SMMS</option>
-                <option value="COA">COA</option>
-                <option value="BDMS">BDMS</option>
-
-              </select>
-
-            </div>
-
-
-            <!-- USER -->
-
-            <div class="login-field">
-
-              <label for="login-user">
-                User ID
-              </label>
-
-              <input
-                id="login-user"
-                required
-                autocomplete="username"
-                placeholder="Enter department user ID"
-              >
-
-            </div>
-
-
-            <!-- PASSWORD -->
-
-            <div class="login-field">
-
-              <label for="login-password">
-                Password
-              </label>
-
-              <input
-                id="login-password"
-                type="password"
-                required
-                autocomplete="current-password"
-                placeholder="Enter password"
-              >
-
-            </div>
-
-
-            <button
-              class="primary wide login-submit"
-              type="submit"
+            <form
+                id="login-form"
+                class="login-form"
             >
 
-              <span>
-                Sign in to Control Desk
-              </span>
+                <select
+                    id="login-department"
+                    class="hidden-department"
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+                    <option value="TMS">TMS</option>
+                    <option value="TDMS">TDMS</option>
+                    <option value="SMMS">SMMS</option>
+                    <option value="COA">COA</option>
+                    <option value="BDMS">BDMS</option>
+                </select>
+
+
+                <div class="login-section-title">
+                    Operating department
+                </div>
+
+
+                <div class="department-grid">
+
+                    <button
+                        type="button"
+                        class="department-button active"
+                        onclick="selectVisionXpressDepartment('TMS', this)"
+                    >
+                        <span class="department-code">
+                            TMS
+                        </span>
+
+                        <span class="department-name">
+                            Track Management
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="department-button"
+                        onclick="selectVisionXpressDepartment('TDMS', this)"
+                    >
+                        <span class="department-code">
+                            TDMS
+                        </span>
+
+                        <span class="department-name">
+                            Traction & Distribution
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="department-button"
+                        onclick="selectVisionXpressDepartment('SMMS', this)"
+                    >
+                        <span class="department-code">
+                            SMMS
+                        </span>
 
-              <span>
-                →
-              </span>
+                        <span class="department-name">
+                            Signal & Telecom
+                        </span>
+                    </button>
 
-            </button>
 
+                    <button
+                        type="button"
+                        class="department-button"
+                        onclick="selectVisionXpressDepartment('COA', this)"
+                    >
+                        <span class="department-code">
+                            COA
+                        </span>
 
-          </form>
+                        <span class="department-name">
+                            Control Office
+                        </span>
+                    </button>
 
 
-          <div class="login-footer-status">
+                    <button
+                        type="button"
+                        class="department-button"
+                        onclick="selectVisionXpressDepartment('BDMS', this)"
+                    >
+                        <span class="department-code">
+                            BDMS
+                        </span>
 
-            <span class="status-dot"></span>
+                        <span class="department-name">
+                            Block Decision Desk
+                        </span>
+                    </button>
 
-            Local planning engine ready
+                </div>
 
-            <span class="status-separator">
-              |
-            </span>
 
-            Secure departmental access
+                <div class="login-field">
 
-          </div>
+                    <label for="login-user">
+                        User ID
+                    </label>
 
-        </section>
+                    <input
+                        id="login-user"
+                        type="text"
+                        placeholder="Enter user ID"
+                        autocomplete="username"
+                        required
+                    >
 
-      </div>
+                </div>
 
 
-      <footer class="login-page-footer">
+                <div class="login-field">
 
-        VisionXpress
-        <span>•</span>
-        Smart Maintenance Block Planning
-        <span>•</span>
-        SIH 2026
+                    <label for="login-password">
+                        Password
+                    </label>
 
-      </footer>
+                    <input
+                        id="login-password"
+                        type="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
 
-    </div>
+                </div>
 
-  </section>
 
+                <button
+                    id="login-submit"
+                    type="submit"
+                    class="login-submit"
+                >
+                    Sign in to Control Desk
+                </button>
 
+            </form>
 
-  <!-- =========================================================
-       MAIN APPLICATION
-       ========================================================= -->
 
-  <section
-    id="app-view"
-    class="app-shell hidden"
-  >
+            <div class="login-footer">
 
+                <span class="status-dot"></span>
 
-    <!-- =======================================================
-         GLOBAL TOP BAR
-         ======================================================= -->
+                Planning engine ready
 
-    <header class="global-header">
+                <span class="footer-divider"></span>
 
+                VisionXpress Operations
 
-      <div class="global-brand">
-
-        <div class="global-logo">
-          VX
-        </div>
-
-
-        <div class="global-brand-text">
-
-          <strong>
-            VisionXpress
-          </strong>
-
-          <span>
-            SMART RAIL MAINTENANCE BLOCK PLANNING
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="global-header-center">
-
-        <div class="header-route">
-
-          <span class="header-line"></span>
-
-          <span>
-            RAILWAY MAINTENANCE CONTROL DESK
-          </span>
-
-          <span class="header-line"></span>
-
-        </div>
-
-      </div>
-
-
-      <div class="global-header-right">
-
-        <div class="header-system">
-
-          <span></span>
-
-          SYSTEM ONLINE
-
-        </div>
-
-
-        <div class="header-date">
-
-          <span>
-            PLANNING DATE
-          </span>
-
-          <strong id="header-planning-date">
-            04 OCT 2026
-          </strong>
-
-        </div>
-
-      </div>
-
-    </header>
-
-
-    <!-- =======================================================
-         BODY
-         ======================================================= -->
-
-    <div class="application-body">
-
-
-      <!-- =====================================================
-           LEFT NAVIGATION
-           ===================================================== -->
-
-      <aside class="sidebar">
-
-
-        <div class="sidebar-heading">
-
-          <span>
-            CONTROL DESK
-          </span>
-
-          <small>
-            Navigation
-          </small>
-
-        </div>
-
-
-        <!-- USER -->
-
-        <div class="user-box">
-
-          <span
-            class="avatar"
-            id="user-avatar"
-          >
-            TD
-          </span>
-
-
-          <div>
-
-            <strong id="user-name">
-              TDMS001
-            </strong>
-
-            <span id="user-department">
-              TDMS
-            </span>
-
-          </div>
+            </div>
 
         </div>
 
-
-        <!-- NAV -->
-
-        <nav id="nav-menu"></nav>
+    </section>
 
 
-        <!-- NAVIGATION INFORMATION -->
 
-        <div class="sidebar-info">
+    <!-- =====================================================
+         APPLICATION VIEW
+         ===================================================== -->
 
-          <div class="sidebar-info-title">
-            PLANNING WORKFLOW
-          </div>
+    <section
+        id="app-view"
+        class="app-shell hidden"
+    >
 
+        <aside class="sidebar">
 
-          <div class="mini-workflow">
+            <div class="sidebar-brand">
 
-            <span class="workflow-active">
-              Input
-            </span>
+                <div class="sidebar-brand-mark">
+                    VX
+                </div>
 
-            <span>→</span>
+                <div class="sidebar-brand-copy">
 
-            <span>
-              Plan
-            </span>
+                    <strong>
+                        VisionXpress
+                    </strong>
 
-            <span>→</span>
+                    <span>
+                        Control Desk
+                    </span>
 
-            <span>
-              Approve
-            </span>
+                </div>
 
-          </div>
-
-        </div>
-
-
-        <!-- BOTTOM -->
-
-        <div class="sidebar-bottom">
+            </div>
 
 
-          <div class="system-status">
-
-            <span class="dot"></span>
-
-            Local engine online
-
-          </div>
+            <div class="sidebar-section-label">
+                OPERATIONS
+            </div>
 
 
-          <button
-            id="logout-button"
-            class="ghost wide"
-          >
-            Sign out
-          </button>
+            <div class="user-box">
 
-        </div>
+                <div
+                    id="user-avatar"
+                    class="avatar"
+                >
+                    TM
+                </div>
 
-      </aside>
+                <div class="user-info">
+
+                    <strong id="user-name">
+                        TMS001
+                    </strong>
+
+                    <span id="user-department">
+                        TMS
+                    </span>
+
+                </div>
+
+            </div>
 
 
-      <!-- =====================================================
-           MAIN WORK AREA
-           ===================================================== -->
-
-      <main class="content">
-
-
-        <!-- TOP PAGE BAR -->
-
-        <header class="topbar">
+            <nav
+                id="nav-menu"
+                class="sidebar-nav"
+            >
+            </nav>
 
 
-          <div class="page-heading">
+            <div class="sidebar-workflow">
+
+                <div class="sidebar-section-label">
+                    PLANNING WORKFLOW
+                </div>
+
+                <div class="mini-workflow">
+
+                    <span class="current">
+                        INPUT
+                    </span>
+
+                    <span class="mini-arrow">›</span>
+
+                    <span>
+                        PLAN
+                    </span>
+
+                    <span class="mini-arrow">›</span>
+
+                    <span>
+                        COORDINATE
+                    </span>
+
+                    <span class="mini-arrow">›</span>
+
+                    <span>
+                        APPROVE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="engine-status">
+
+                    <span class="status-dot"></span>
+
+                    Local planning engine online
+
+                </div>
+
+                <button
+                    id="logout-button"
+                    type="button"
+                    class="logout-button"
+                >
+                    Sign out
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <main class="content">
+
+            <header class="topbar">
+
+                <div class="page-heading">
+
+                    <div
+                        id="page-kicker"
+                        class="page-kicker"
+                    >
+                        CONTROL CENTER
+                    </div>
+
+                    <h2 id="page-title">
+                        Dashboard
+                    </h2>
+
+                </div>
+
+
+                <div class="top-actions">
+
+                    <div class="date-control">
+
+                        <label for="planning-date">
+                            Planning date
+                        </label>
+
+                        <input
+                            id="planning-date"
+                            type="date"
+                            value="2026-09-01"
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="refresh-button"
+                        type="button"
+                        class="header-button"
+                    >
+                        Refresh
+                    </button>
+
+
+                    <button
+                        id="notify-button"
+                        type="button"
+                        class="notification-button"
+                        aria-label="Notifications"
+                    >
+
+                        <span class="bell-symbol">
+                            🔔
+                        </span>
+
+                        <span
+                            id="notify-count"
+                            class="notif-count"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </header>
+
 
             <div
-              class="eyebrow"
-              id="page-kicker"
-            >
-              CONTROL CENTER
-            </div>
-
-            <h2 id="page-title">
-              Dashboard
-            </h2>
-
-          </div>
-
-
-          <div class="top-actions">
-
-
-            <div class="date-control">
-
-              <label for="planning-date">
-                Planning date
-              </label>
-
-              <input
-                id="planning-date"
-                type="date"
-                value="2026-09-01"
-              >
-
-            </div>
-
-
-            <button
-              id="refresh-button"
-              class="secondary"
-            >
-              Refresh
-            </button>
-
-
-            <button
-              id="notify-button"
-              class="icon-button"
-              aria-label="Notifications"
+                id="dashboard-workflow"
+                class="workflow-strip"
             >
 
-              🔔
+                <div class="workflow-step active">
 
-              <span
-                id="notify-count"
-                class="notif-count"
-              >
-                0
-              </span>
+                    <div class="workflow-number">
+                        01
+                    </div>
 
-            </button>
+                    <div class="workflow-copy">
 
-          </div>
+                        <strong>
+                            MAINTENANCE
+                        </strong>
 
-        </header>
+                        <small>
+                            Requests & asset requirements
+                        </small>
+
+                    </div>
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+                </div>
 
 
-        <!-- OPERATIONAL STRIP -->
+                <div class="workflow-step">
 
-        <section class="operational-strip">
+                    <div class="workflow-number">
+                        02
+                    </div>
+
+                    <div class="workflow-copy">
+
+                        <strong>
+                            PRIORITIZATION
+                        </strong>
+
+                        <small>
+                            Criticality & urgency
+                        </small>
+
+                    </div>
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+                </div>
 
 
-          <div class="operation-item">
+                <div class="workflow-step">
 
-            <span class="operation-number">
-              01
-            </span>
+                    <div class="workflow-number">
+                        03
+                    </div>
 
-            <div>
+                    <div class="workflow-copy">
 
-              <strong>
-                MAINTENANCE
-              </strong>
+                        <strong>
+                            BLOCK PLANNING
+                        </strong>
 
-              <small>
-                Requests & assets
-              </small>
+                        <small>
+                            Feasible execution window
+                        </small>
+
+                    </div>
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-step">
+
+                    <div class="workflow-number">
+                        04
+                    </div>
+
+                    <div class="workflow-copy">
+
+                        <strong>
+                            COORDINATION
+                        </strong>
+
+                        <small>
+                            Common maintenance block
+                        </small>
+
+                    </div>
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-step">
+
+                    <div class="workflow-number">
+                        05
+                    </div>
+
+                    <div class="workflow-copy">
+
+                        <strong>
+                            BDMS
+                        </strong>
+
+                        <small>
+                            Review & approval
+                        </small>
+
+                    </div>
+
+                </div>
 
             </div>
 
-          </div>
 
-
-          <span class="operation-arrow">
-            →
-          </span>
-
-
-          <div class="operation-item active">
-
-            <span class="operation-number">
-              02
-            </span>
-
-            <div>
-
-              <strong>
-                PLANNING
-              </strong>
-
-              <small>
-                Block allocation
-              </small>
-
+            <div
+                id="main-view"
+                class="main-view"
+            >
             </div>
 
-          </div>
+        </main>
+
+    </section>
 
 
-          <span class="operation-arrow">
-            →
-          </span>
+    <div id="toast-root"></div>
+
+    <div id="modal-root"></div>
 
 
-          <div class="operation-item">
+    <script>
 
-            <span class="operation-number">
-              03
-            </span>
+        function selectVisionXpressDepartment(
+            department,
+            button
+        ) {
 
-            <div>
-
-              <strong>
-                COORDINATION
-              </strong>
-
-              <small>
-                Common possession
-              </small>
-
-            </div>
-
-          </div>
-
-
-          <span class="operation-arrow">
-            →
-          </span>
-
-
-          <div class="operation-item">
-
-            <span class="operation-number">
-              04
-            </span>
-
-            <div>
-
-              <strong>
-                BDMS APPROVAL
-              </strong>
-
-              <small>
-                Final decision
-              </small>
-
-            </div>
-
-          </div>
-
-
-        </section>
-
-
-        <!-- EXISTING APPLICATION CONTENT -->
-
-        <div id="main-view"></div>
-
-
-      </main>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================================================
-       MODALS / TOASTS
-       ========================================================= -->
-
-  <div id="modal-root"></div>
-
-  <div id="toast-root"></div>
-
-
-  <!-- =========================================================
-       UI CONTROLS
-       DOES NOT TOUCH BACKEND
-       ========================================================= -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-
-        /* =====================================================
-           DEPARTMENT BUTTONS
-           ===================================================== */
-
-        const buttons =
-          document.querySelectorAll(
-            ".department-option"
-          );
-
-        const select =
-          document.getElementById(
-            "login-department"
-          );
-
-
-        buttons.forEach(
-          function (button) {
-
-            button.addEventListener(
-              "click",
-              function () {
-
-                const department =
-                  button.dataset.department;
-
-
-                if (select) {
-
-                  select.value =
-                    department;
-
-                  select.dispatchEvent(
-                    new Event(
-                      "change",
-                      {
-                        bubbles: true
-                      }
-                    )
-                  );
-
-                }
-
-
-                buttons.forEach(
-                  function (item) {
-
-                    item.classList.remove(
-                      "active"
-                    );
-
-                  }
+            const select =
+                document.getElementById(
+                    "login-department"
                 );
 
+            if (select) {
+                select.value = department;
+            }
+
+            document
+                .querySelectorAll(
+                    ".department-button"
+                )
+                .forEach(
+                    function (item) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+            if (button) {
 
                 button.classList.add(
-                  "active"
+                    "active"
                 );
 
-              }
-            );
-
-          }
-        );
-
-
-        /* =====================================================
-           THEME
-           ===================================================== */
-
-        const themeButton =
-          document.getElementById(
-            "theme-toggle"
-          );
-
-
-        function refreshThemeButton() {
-
-          const dark =
-            document.body.classList.contains(
-              "dark-theme"
-            );
-
-
-          themeButton.innerHTML =
-            dark
-
-              ? '<span class="theme-icon">☀</span><span class="theme-label">Light Mode</span>'
-
-              : '<span class="theme-icon">☾</span><span class="theme-label">Dark Mode</span>';
+            }
 
         }
 
-
-        const savedTheme =
-          localStorage.getItem(
-            "visionxpress-theme"
-          );
+    </script>
 
 
-        if (savedTheme === "dark") {
-
-          document.body.classList.add(
-            "dark-theme"
-          );
-
-        }
-
-
-        refreshThemeButton();
-
-
-        themeButton.addEventListener(
-          "click",
-          function () {
-
-            document.body.classList.toggle(
-              "dark-theme"
-            );
-
-
-            localStorage.setItem(
-              "visionxpress-theme",
-
-              document.body.classList.contains(
-                "dark-theme"
-              )
-                ? "dark"
-                : "light"
-            );
-
-
-            refreshThemeButton();
-
-          }
-        );
-
-
-        /* =====================================================
-           PLANNING DATE HEADER
-           ===================================================== */
-
-        const planningDate =
-          document.getElementById(
-            "planning-date"
-          );
-
-        const headerDate =
-          document.getElementById(
-            "header-planning-date"
-          );
-
-
-        function updateHeaderDate() {
-
-          if (
-            !planningDate ||
-            !headerDate ||
-            !planningDate.value
-          ) {
-
-            return;
-
-          }
-
-
-          const date =
-            new Date(
-              planningDate.value +
-              "T00:00:00"
-            );
-
-
-          const months = [
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC"
-          ];
-
-
-          headerDate.textContent =
-            String(
-              date.getDate()
-            ).padStart(2, "0")
-            + " "
-            + months[
-              date.getMonth()
-            ]
-            + " "
-            + date.getFullYear();
-
-        }
-
-
-        updateHeaderDate();
-
-
-        if (planningDate) {
-
-          planningDate.addEventListener(
-            "change",
-            updateHeaderDate
-          );
-
-        }
-
-      }
-    );
-
-  </script>
-
-
-  <!-- =========================================================
-       EXISTING APPLICATION LOGIC
-       DO NOT CHANGE
-       ========================================================= -->
-
-  <script src="/app.js"></script>
+    <script src="/app.js"></script>
 
 </body>
-
 </html>
