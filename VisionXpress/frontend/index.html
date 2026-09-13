@@ -10,12 +10,24 @@
 
     <meta
         name="theme-color"
-        content="#0b3d5c"
+        content="#F7F8F5"
+    >
+
+    <meta
+        name="description"
+        content="VisionXpress — AI-powered automatic block planning to maximize asset availability for train operations on Indian Railways."
     >
 
     <title>
-        VisionXpress | Railway Maintenance Control Desk
+        VisionXpress | Railway Operations Control Centre
     </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    >
 
     <link
         rel="stylesheet"
@@ -26,271 +38,1138 @@
 <body>
 
     <!-- =====================================================
-         LOGIN VIEW
+         PUBLIC TOP HEADER BAR
+         ===================================================== -->
+
+    <header
+        id="public-header"
+        class="public-header"
+    >
+        <div class="public-header-inner">
+
+            <div
+                class="public-brand"
+                onclick="showLanding()"
+                role="button"
+                tabindex="0"
+                title="VisionXpress Overview"
+            >
+                <div class="public-brand-logo">
+                    VX
+                </div>
+
+                <div class="public-brand-text">
+                    <div class="public-brand-name">
+                        VisionXpress
+                    </div>
+
+                    <div class="public-brand-sub">
+                        Decision-Support Prototype
+                    </div>
+                </div>
+            </div>
+
+            <nav class="public-nav">
+                <a
+                    href="#overview"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >Overview</a>
+
+                <a
+                    href="#problem"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >The Challenge</a>
+
+                <a
+                    href="#workflow"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >Workflow</a>
+
+                <a
+                    href="#capabilities"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >Capabilities</a>
+
+                <a
+                    href="#prototype-scope"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >Prototype Scope</a>
+
+                <a
+                    href="#technology"
+                    class="public-nav-link"
+                    onclick="showLanding()"
+                >Architecture</a>
+            </nav>
+
+            <div class="public-actions">
+                <div class="public-status-chip">
+                    <span class="status-pulse-dot"></span>
+                    <span class="status-chip-text">Prototype · Evaluation v1.1</span>
+                </div>
+
+                <button
+                    id="public-mode-button"
+                    type="button"
+                    class="public-mode-btn"
+                    aria-label="Toggle dark mode"
+                    title="Toggle display mode"
+                >
+                    ☾ Dark
+                </button>
+
+                <button
+                    id="public-cta-btn"
+                    type="button"
+                    class="public-cta-btn"
+                    onclick="showLogin()"
+                >
+                    Open Control Centre →
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+
+    <!-- =====================================================
+         LANDING PAGE VIEW (TRUTHFUL PRESENTATION LAYER)
+         ===================================================== -->
+
+    <section
+        id="landing-view"
+        class="landing-view"
+    >
+
+        <!-- Hero Section -->
+        <div
+            id="overview"
+            class="landing-hero"
+        >
+            <div class="landing-container">
+
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span>
+                    DECISION-SUPPORT PROTOTYPE · SMART INDIA HACKATHON
+                </div>
+
+                <div class="hero-brand-kicker">
+                    VISIONXPRESS
+                </div>
+
+                <h1 class="hero-title">
+                    AI-Powered Automatic Block Planning to Maximize Asset Availability for Train Operations on Indian Railways
+                </h1>
+
+                <p class="hero-desc">
+                    An operational decision-support prototype designed for organizing maintenance requirements, prioritizing critical works, planning feasible track blocks around train schedules, coordinating multi-department activities, and supporting structured approval workflows.
+                </p>
+
+                <div class="hero-actions">
+                    <button
+                        type="button"
+                        class="btn-hero-primary"
+                        onclick="showLogin()"
+                    >
+                        Open Control Centre →
+                    </button>
+
+                    <a
+                        href="#workflow"
+                        class="btn-hero-secondary"
+                    >
+                        Explore Workflow ↓
+                    </a>
+                </div>
+
+                <!-- Conceptual Hero Visual (Illustrative Diagram, No Fake Telemetry) -->
+                <div class="hero-diagram-card">
+
+                    <div class="hero-diagram-header">
+                        <div class="diagram-title">
+                            <strong>Operational Concept:</strong> Coordinated Maintenance Block Allocation on Shared Corridors
+                        </div>
+                        <span class="diagram-tag">Abstract Planning Model</span>
+                    </div>
+
+                    <div class="hero-diagram-body">
+
+                        <!-- Corridor Track Timeline -->
+                        <div class="diagram-track-row">
+                            <div class="track-label">
+                                UP Line
+                            </div>
+                            <div class="track-timeline">
+                                <div class="track-segment train-segment">
+                                    <span>Scheduled Train Movement</span>
+                                </div>
+                                <div class="track-segment block-segment">
+                                    <div class="block-segment-header">
+                                        Feasible Maintenance Block Window
+                                    </div>
+                                    <div class="block-bundled-tags">
+                                        <span class="tag-tms">TMS Track Work</span>
+                                        <span class="tag-tdms">TDMS OHE Isolation</span>
+                                        <span class="tag-smms">SMMS S&T Check</span>
+                                    </div>
+                                </div>
+                                <div class="track-segment train-segment">
+                                    <span>Scheduled Train Movement</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Down Track Timeline -->
+                        <div class="diagram-track-row">
+                            <div class="track-label">
+                                DOWN Line
+                            </div>
+                            <div class="track-timeline">
+                                <div class="track-segment train-segment full-width">
+                                    <span>Continuous Operational Train Traffic (Bi-Directional Corridor Safety Maintained)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="hero-diagram-footer">
+                        <div class="diagram-note">
+                            ℹ Conceptual diagram illustrating multi-department bundling within operational headway intervals without disrupting priority train paths.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Problem Section: The Planning Challenge -->
+        <div
+            id="problem"
+            class="landing-section bg-alt"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        THE PLANNING CHALLENGE
+                    </div>
+                    <h2 class="section-title">
+                        Complexities in Railway Maintenance Block Scheduling
+                    </h2>
+                    <p class="section-sub">
+                        Railway track maintenance requires reconciling multiple engineering demands against strict operational and passenger safety constraints.
+                    </p>
+                </div>
+
+                <div class="problem-grid">
+
+                    <div class="problem-card">
+                        <div class="problem-num">
+                            01
+                        </div>
+                        <h3>Multiple Maintenance Sources</h3>
+                        <p>
+                            Permanent Way (Civil), Traction Distribution (Electrical), and Signalling & Telecom units generate maintenance requirements independently using disparate departmental logging systems.
+                        </p>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-num">
+                            02
+                        </div>
+                        <h3>Varying Defect Priorities</h3>
+                        <p>
+                            Requests vary from routine preventive patrols to severe track geometry defects and emergency catenary adjustments, requiring an objective, transparent basis for prioritization.
+                        </p>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-num">
+                            03
+                        </div>
+                        <h3>Limited Operational Windows</h3>
+                        <p>
+                            High-density railway corridors operate near capacity, leaving narrow intervals between train movements where maintenance blocks can be feasibly granted without inducing passenger delays.
+                        </p>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-num">
+                            04
+                        </div>
+                        <h3>Inter-Departmental Conflicts</h3>
+                        <p>
+                            Without coordinated scheduling, maintenance blocks risk overlapping in incompatible spatial zones, causing mutual interference or underutilization of precious track possession time.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Solution Section: How VisionXpress Approaches the Problem -->
+        <div
+            id="solution"
+            class="landing-section"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        THE APPROACH
+                    </div>
+                    <h2 class="section-title">
+                        How VisionXpress Structures Maintenance Planning
+                    </h2>
+                    <p class="section-sub">
+                        A systematic decision-support pipeline designed to transition manual ad-hoc requests into validated, coordinated corridor candidate plans.
+                    </p>
+                </div>
+
+                <div class="solution-steps-grid">
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 1
+                        </div>
+                        <h4>Ingest Requirements</h4>
+                        <p>
+                            Collect structured maintenance requests across departments with spatial locations, defect severity ratings, machinery requirements, and required durations.
+                        </p>
+                    </div>
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 2
+                        </div>
+                        <h4>Prioritize Work</h4>
+                        <p>
+                            Calculate multi-factor priority scores considering defect severity, failure risk, safety criticality, asset status, and scheduled target dates.
+                        </p>
+                    </div>
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 3
+                        </div>
+                        <h4>Identify Feasible Slots</h4>
+                        <p>
+                            Evaluate scheduled train movements and existing block sanctions to discover feasible time intervals where work can be safely executed.
+                        </p>
+                    </div>
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 4
+                        </div>
+                        <h4>Coordinate Compatible Tasks</h4>
+                        <p>
+                            Group compatible tasks from different engineering branches working on the same corridor section into common coordinated blocks.
+                        </p>
+                    </div>
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 5
+                        </div>
+                        <h4>Facilitate BDMS Review</h4>
+                        <p>
+                            Provide the Block Decision Management System desk with candidate plans, alternative slot comparisons, and clear sanction controls.
+                        </p>
+                    </div>
+
+                    <div class="solution-step">
+                        <div class="step-badge">
+                            Step 6
+                        </div>
+                        <h4>Track Decisions & Status</h4>
+                        <p>
+                            Maintain full lifecycle tracking from initial submission to final sanction or rejection, supported by in-app notifications.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Workflow Section: Visual Step Sequence -->
+        <div
+            id="workflow"
+            class="landing-section bg-alt"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        OPERATIONAL WORKFLOW
+                    </div>
+                    <h2 class="section-title">
+                        End-to-End Planning Lifecycle
+                    </h2>
+                    <p class="section-sub">
+                        The 5 sequential operational phases connecting engineering departments with the central block decision desk.
+                    </p>
+                </div>
+
+                <div class="workflow-sequence">
+
+                    <div class="workflow-node">
+                        <div class="wf-index">
+                            01
+                        </div>
+                        <div class="wf-content">
+                            <div class="wf-phase">
+                                MAINTENANCE
+                            </div>
+                            <h4>Requisitions & Asset Data</h4>
+                            <p>
+                                Engineering branches (TMS, TDMS, SMMS) submit planned maintenance requirements with track location, machine needs, and duration.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-connector">
+                        ↓
+                    </div>
+
+                    <div class="workflow-node">
+                        <div class="wf-index">
+                            02
+                        </div>
+                        <div class="wf-content">
+                            <div class="wf-phase">
+                                PRIORITIZATION
+                            </div>
+                            <h4>Criticality & Urgency Scoring</h4>
+                            <p>
+                                Multi-criteria scoring evaluates defect severity, failure probability, and safety risk to produce an objective priority ranking.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-connector">
+                        ↓
+                    </div>
+
+                    <div class="workflow-node">
+                        <div class="wf-index">
+                            03
+                        </div>
+                        <div class="wf-content">
+                            <div class="wf-phase">
+                                BLOCK PLANNING
+                            </div>
+                            <h4>Feasible Execution Window</h4>
+                            <p>
+                                The slot discovery engine checks scheduled train intervals on the section to allocate available operational time windows.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-connector">
+                        ↓
+                    </div>
+
+                    <div class="workflow-node">
+                        <div class="wf-index">
+                            04
+                        </div>
+                        <div class="wf-content">
+                            <div class="wf-phase">
+                                COORDINATION
+                            </div>
+                            <h4>Common Maintenance Block</h4>
+                            <p>
+                                Cross-department logic clusters compatible civil, electrical, and signalling activities into single shared corridor blocks.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-connector">
+                        ↓
+                    </div>
+
+                    <div class="workflow-node highlight-node">
+                        <div class="wf-index">
+                            05
+                        </div>
+                        <div class="wf-content">
+                            <div class="wf-phase">
+                                BDMS
+                            </div>
+                            <h4>Review & Sanction</h4>
+                            <p>
+                                The Section Controller evaluates candidate plans, explores alternative time slots, and records approval decisions.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Key Capabilities (Fact-Checked Against Codebase) -->
+        <div
+            id="capabilities"
+            class="landing-section"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        SYSTEM CAPABILITIES
+                    </div>
+                    <h2 class="section-title">
+                        Core Functional Modules Implemented
+                    </h2>
+                    <p class="section-sub">
+                        Capabilities verified against the active VisionXpress codebase and functional service modules.
+                    </p>
+                </div>
+
+                <div class="capabilities-grid-verified">
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            📋
+                        </div>
+                        <h4>Maintenance Request Management</h4>
+                        <p>
+                            Supports manual request logging and bulk data upload via structured Excel (.xlsx) templates across civil, electrical, and signal branches.
+                        </p>
+                        <div class="cap-tag">
+                            Service: input_loader.py
+                        </div>
+                    </div>
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            ⚖️
+                        </div>
+                        <h4>Objective Priority Scoring</h4>
+                        <p>
+                            Calculates priority scores (0–100) using defect severity, failure risk, safety criticality, asset status, and target date urgency.
+                        </p>
+                        <div class="cap-tag">
+                            Service: priority.py
+                        </div>
+                    </div>
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            ⏱️
+                        </div>
+                        <h4>Feasible Slot Discovery</h4>
+                        <p>
+                            Evaluates sectional train timetables to identify available intervals between train movements capable of accommodating required durations.
+                        </p>
+                        <div class="cap-tag">
+                            Service: slot_engine.py
+                        </div>
+                    </div>
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            🔗
+                        </div>
+                        <h4>Cross-Department Coordination</h4>
+                        <p>
+                            Identifies opportunities to combine tasks from different departments occurring on the same section into unified maintenance windows.
+                        </p>
+                        <div class="cap-tag">
+                            Service: coordination.py
+                        </div>
+                    </div>
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            🛡️
+                        </div>
+                        <h4>Conflict Detection Logic</h4>
+                        <p>
+                            Verifies that candidate blocks do not violate sectional constraints, duplicate track possessions, or clash with prior sanctions.
+                        </p>
+                        <div class="cap-tag">
+                            Service: conflict_engine.py
+                        </div>
+                    </div>
+
+                    <div class="cap-card-v">
+                        <div class="cap-icon-v">
+                            ✍️
+                        </div>
+                        <h4>BDMS Controller Sanction Desk</h4>
+                        <p>
+                            Enables operations controllers to review proposed blocks, inspect alternative feasible time slots, and record approval or rejection.
+                        </p>
+                        <div class="cap-tag">
+                            Service: application_service.py
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- What the Prototype Demonstrates (Hackathon Credibility Section) -->
+        <div
+            id="prototype-scope"
+            class="landing-section bg-alt"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        PROTOTYPE EVALUATION SCOPE
+                    </div>
+                    <h2 class="section-title">
+                        What the Current Prototype Demonstrates
+                    </h2>
+                    <p class="section-sub">
+                        An honest overview of what is implemented and testable in the current software release.
+                    </p>
+                </div>
+
+                <div class="prototype-scope-card">
+
+                    <div class="scope-col">
+                        <div class="scope-col-header">
+                            <span class="scope-dot green"></span>
+                            <h4>Currently Implemented & Demonstrable</h4>
+                        </div>
+                        <ul class="scope-list">
+                            <li>
+                                <strong>5 Department Roles:</strong> Switchable access for TMS (Track), TDMS (Traction), SMMS (Signals), COA (Timetable), and BDMS (Controller).
+                            </li>
+                            <li>
+                                <strong>Automated Plan Generation:</strong> Generates candidate block allocations from pending maintenance requests via backend optimization logic.
+                            </li>
+                            <li>
+                                <strong>Interactive Block Modification:</strong> Modal interface allowing operators to explore alternative time slots and recalculate feasibility.
+                            </li>
+                            <li>
+                                <strong>Bulk Template Ingestion:</strong> Ingestion and validation of Excel (.xlsx) files for maintenance tasks and COA train schedules.
+                            </li>
+                            <li>
+                                <strong>Pre-Loaded Demo Scenario:</strong> One-click demo dataset generation (`/api/demo/load`) for instant evaluator walkthrough.
+                            </li>
+                            <li>
+                                <strong>Persistent SQLite Database:</strong> Relational storage tracking requests, blocks, decisions, and system alerts.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="scope-col">
+                        <div class="scope-col-header">
+                            <span class="scope-dot blue"></span>
+                            <h4>Intended Role & Honest Boundaries</h4>
+                        </div>
+                        <ul class="scope-list">
+                            <li>
+                                <strong>Decision-Support Tool:</strong> Provides recommendations and conflict checks; does not replace final human controller authority.
+                            </li>
+                            <li>
+                                <strong>Algorithmic Nature:</strong> Utilizes deterministic optimization heuristics and multi-criteria scoring; does not require opaque deep learning.
+                            </li>
+                            <li>
+                                <strong>Simulated Data Environment:</strong> Tested against representative divisional corridor schedules and synthetic maintenance sets.
+                            </li>
+                            <li>
+                                <strong>Hackathon Scope:</strong> Demonstrates operational concept feasibility; not yet interfaced with live railway production feeds.
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Technology & Architecture Section -->
+        <div
+            id="technology"
+            class="landing-section"
+        >
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        SYSTEM ARCHITECTURE
+                    </div>
+                    <h2 class="section-title">
+                        Verified Technical Stack
+                    </h2>
+                    <p class="section-sub">
+                        Technologies and architectural components genuinely present in the project repository.
+                    </p>
+                </div>
+
+                <div class="tech-grid">
+
+                    <div class="tech-card">
+                        <div class="tech-card-header">
+                            Frontend Presentation
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <strong>HTML5 & Vanilla CSS:</strong> Bespoke single-pass stylesheet with railway control desk styling.
+                            </div>
+                            <div class="tech-item">
+                                <strong>Vanilla JavaScript (ES6+):</strong> Modular client logic managing state, views, API integration, and modals.
+                            </div>
+                            <div class="tech-item">
+                                <strong>Inter Typography:</strong> Clean, high-legibility interface designed for dense operational tables.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-card-header">
+                            Backend & API Layer
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <strong>FastAPI (Python 3):</strong> High-performance asynchronous REST API handling authentication, uploads, and planning.
+                            </div>
+                            <div class="tech-item">
+                                <strong>Pydantic Schemas:</strong> Strict data validation ensuring data integrity across requests and candidate blocks.
+                            </div>
+                            <div class="tech-item">
+                                <strong>Uvicorn ASGI:</strong> Lightweight production-grade application server.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-card-header">
+                            Data, Parsing & Testing
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <strong>SQLite Relational Database:</strong> Embedded storage for tasks, blocks, users, and audit logs.
+                            </div>
+                            <div class="tech-item">
+                                <strong>openpyxl:</strong> Native parsing and generation of railway maintenance and COA spreadsheet templates.
+                            </div>
+                            <div class="tech-item">
+                                <strong>Pytest Suite:</strong> 47 automated unit and integration tests verifying planning algorithms and APIs.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- High-Level Flow Diagram -->
+                <div class="architecture-flow-box">
+                    <div class="arch-flow-title">
+                        HIGH-LEVEL INFORMATION FLOW
+                    </div>
+                    <div class="arch-flow-steps">
+                        <div class="arch-step">Data Sources (Forms / Excel)</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-step">Priority & Risk Scoring</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-step">Slot Discovery & Conflict Engine</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-step">Coordination Bundling</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-step">BDMS Approval Desk</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-step">Audit & Tracking Ledger</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Designed for Operational Planning (Credibility & Principles) -->
+        <div class="landing-section bg-alt">
+            <div class="landing-container">
+
+                <div class="section-header text-center">
+                    <div class="section-kicker">
+                        DESIGN PRINCIPLES
+                    </div>
+                    <h2 class="section-title">
+                        Designed for Operational Decision Support
+                    </h2>
+                    <p class="section-sub">
+                        Guiding principles ensuring the software remains practical, transparent, and aligned with railway operational reality.
+                    </p>
+                </div>
+
+                <div class="principles-grid">
+
+                    <div class="principle-card">
+                        <h4>Human-in-the-Loop Authority</h4>
+                        <p>
+                            The system is explicitly designed as decision support. Section Controllers maintain final sanction authority and can inspect or modify any proposed maintenance window.
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h4>Transparent Deterministic Rules</h4>
+                        <p>
+                            Prioritization and slot allocation follow clear, explainable engineering rules rather than opaque models, ensuring controllers can understand why a slot was suggested.
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h4>Cross-Functional Visibility</h4>
+                        <p>
+                            Breaks down inter-departmental silos by giving civil, traction, and signalling engineers common situational awareness of corridor block availability.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Launch CTA Banner -->
+        <div class="landing-cta">
+            <div class="landing-container text-center">
+                <h2 class="cta-title">
+                    Experience the VisionXpress Control Desk
+                </h2>
+                <p class="cta-desc">
+                    Access the interactive decision-support application, explore the 5 departmental portals, or load the pre-configured demonstration scenario.
+                </p>
+                <button
+                    type="button"
+                    class="btn-cta-large"
+                    onclick="showLogin()"
+                >
+                    Open Control Centre →
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Public Footer -->
+        <footer class="public-footer">
+            <div class="landing-container footer-content">
+                <div class="footer-brand">
+                    <div class="public-brand-logo sm">
+                        VX
+                    </div>
+                    <div>
+                        <strong>VisionXpress</strong>
+                        <div class="footer-sub">
+                            AI-Powered Automatic Block Planning to Maximize Asset Availability for Train Operations on Indian Railways
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a
+                        href="#overview"
+                        onclick="showLanding()"
+                    >Overview</a>
+                    <a
+                        href="#problem"
+                        onclick="showLanding()"
+                    >The Challenge</a>
+                    <a
+                        href="#workflow"
+                        onclick="showLanding()"
+                    >Workflow</a>
+                    <a
+                        href="#capabilities"
+                        onclick="showLanding()"
+                    >Capabilities</a>
+                    <a
+                        href="#prototype-scope"
+                        onclick="showLanding()"
+                    >Prototype Scope</a>
+                    <button
+                        type="button"
+                        class="footer-login-link"
+                        onclick="showLogin()"
+                    >Open Control Centre</button>
+                </div>
+
+                <div class="footer-copy">
+                    Academic Decision-Support Prototype · Smart India Hackathon Presentation · Factual Prototype Documentation
+                </div>
+            </div>
+        </footer>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LOGIN VIEW (COMPACT SLEEK MODAL DESK)
          ===================================================== -->
 
     <section
         id="login-view"
-        class="login-view"
+        class="login-view hidden"
     >
 
-        <div class="login-card">
+        <div class="login-wrapper">
 
-            <!-- Brand -->
-
-            <div class="login-card-header">
-
-                <div class="login-brand">
-
-                    <div class="login-brand-mark">
-                        VX
-                    </div>
-
-                    <div class="login-brand-copy">
-
-                        <div class="login-brand-title">
-                            VisionXpress
-                        </div>
-
-                        <div class="login-brand-subtitle">
-                            Smart Rail Maintenance Block Planning
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="login-separator"></div>
-
-
-                <div class="login-kicker">
-                    SECURE OPERATIONS ACCESS
-                </div>
-
-                <h1>
-                    Sign in to Control Desk
-                </h1>
-
-                <p>
-                    Plan maintenance work around railway
-                    operations with one coordinated control desk.
-                </p>
-
+            <div class="login-back-bar">
+                <button
+                    type="button"
+                    class="btn-back-portal"
+                    onclick="showLanding()"
+                >
+                    ← Back to VisionXpress Portal
+                </button>
             </div>
 
+            <div class="login-card">
 
-            <!-- Login -->
+                <!-- Compact Brand Header -->
+                <div class="login-card-header">
 
-            <form
-                id="login-form"
-                class="login-form"
-            >
+                    <div class="login-brand-compact">
+                        <div class="login-brand-mark">
+                            VX
+                        </div>
 
-                <!-- Existing JS requires this select -->
-                <select
-                    id="login-department"
-                    class="hidden-department"
-                    tabindex="-1"
-                    aria-hidden="true"
-                >
-                    <option value="TMS">
-                        TMS
-                    </option>
+                        <div class="login-brand-copy">
+                            <div class="login-brand-title">
+                                VisionXpress
+                            </div>
+                            <div class="login-brand-subtitle">
+                                Railway Operations Control Centre
+                            </div>
+                        </div>
+                    </div>
 
-                    <option value="TDMS">
-                        TDMS
-                    </option>
+                    <div class="login-title-row">
+                        <h1>
+                            Sign in to Control Desk
+                        </h1>
+                        <p>
+                            Select operating department and sign in.
+                        </p>
+                    </div>
 
-                    <option value="SMMS">
-                        SMMS
-                    </option>
-
-                    <option value="COA">
-                        COA
-                    </option>
-
-                    <option value="BDMS">
-                        BDMS
-                    </option>
-
-                </select>
-
-
-                <!-- Department -->
-
-                <div class="login-section-title">
-                    Operating department
                 </div>
 
 
-                <div class="department-grid">
+                <!-- Login Form -->
+                <form
+                    id="login-form"
+                    class="login-form"
+                >
 
-                    <button
-                        type="button"
-                        class="department-button active"
-                        data-department="TMS"
-                        onclick="
-                            selectVisionXpressDepartment(
-                                'TMS',
-                                this
-                            )
-                        "
+                    <!-- Existing JS requires this select -->
+                    <select
+                        id="login-department"
+                        class="hidden-department"
+                        tabindex="-1"
+                        aria-hidden="true"
                     >
-                        <span class="department-code">
+                        <option value="TMS">
                             TMS
-                        </span>
+                        </option>
 
-                        <span class="department-name">
-                            Track Management
-                        </span>
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="department-button"
-                        data-department="TDMS"
-                        onclick="
-                            selectVisionXpressDepartment(
-                                'TDMS',
-                                this
-                            )
-                        "
-                    >
-                        <span class="department-code">
+                        <option value="TDMS">
                             TDMS
-                        </span>
+                        </option>
 
-                        <span class="department-name">
-                            Traction & Distribution
-                        </span>
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="department-button"
-                        data-department="SMMS"
-                        onclick="
-                            selectVisionXpressDepartment(
-                                'SMMS',
-                                this
-                            )
-                        "
-                    >
-                        <span class="department-code">
+                        <option value="SMMS">
                             SMMS
-                        </span>
+                        </option>
 
-                        <span class="department-name">
-                            Signal & Telecom
-                        </span>
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="department-button"
-                        data-department="COA"
-                        onclick="
-                            selectVisionXpressDepartment(
-                                'COA',
-                                this
-                            )
-                        "
-                    >
-                        <span class="department-code">
+                        <option value="COA">
                             COA
-                        </span>
+                        </option>
 
-                        <span class="department-name">
-                            Control Office
-                        </span>
-                    </button>
+                        <option value="BDMS">
+                            BDMS
+                        </option>
+                    </select>
+
+
+                    <!-- Department Selector (Compact 5-Col) -->
+                    <div class="login-section-title">
+                        Operating Department
+                    </div>
+
+                    <div class="department-grid">
+
+                        <button
+                            type="button"
+                            class="department-button active"
+                            data-department="TMS"
+                            onclick="
+                                selectVisionXpressDepartment(
+                                    'TMS',
+                                    this
+                                )
+                            "
+                        >
+                            <span class="department-code">
+                                TMS
+                            </span>
+                            <span class="department-name">
+                                Track
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="department-button"
+                            data-department="TDMS"
+                            onclick="
+                                selectVisionXpressDepartment(
+                                    'TDMS',
+                                    this
+                                )
+                            "
+                        >
+                            <span class="department-code">
+                                TDMS
+                            </span>
+                            <span class="department-name">
+                                OHE
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="department-button"
+                            data-department="SMMS"
+                            onclick="
+                                selectVisionXpressDepartment(
+                                    'SMMS',
+                                    this
+                                )
+                            "
+                        >
+                            <span class="department-code">
+                                SMMS
+                            </span>
+                            <span class="department-name">
+                                Signal
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="department-button"
+                            data-department="COA"
+                            onclick="
+                                selectVisionXpressDepartment(
+                                    'COA',
+                                    this
+                                )
+                            "
+                        >
+                            <span class="department-code">
+                                COA
+                            </span>
+                            <span class="department-name">
+                                Traffic
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="department-button"
+                            data-department="BDMS"
+                            onclick="
+                                selectVisionXpressDepartment(
+                                    'BDMS',
+                                    this
+                                )
+                            "
+                        >
+                            <span class="department-code">
+                                BDMS
+                            </span>
+                            <span class="department-name">
+                                Blocks
+                            </span>
+                        </button>
+
+                    </div>
+
+
+                    <!-- User ID -->
+                    <div class="login-field">
+                        <label for="login-user">
+                            User ID
+                        </label>
+
+                        <input
+                            id="login-user"
+                            type="text"
+                            placeholder="e.g. TMS001"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="login-field">
+                        <label for="login-password">
+                            Password
+                        </label>
+
+                        <input
+                            id="login-password"
+                            type="password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
 
 
                     <button
-                        type="button"
-                        class="department-button"
-                        data-department="BDMS"
-                        onclick="
-                            selectVisionXpressDepartment(
-                                'BDMS',
-                                this
-                            )
-                        "
+                        id="login-submit"
+                        type="submit"
+                        class="login-submit"
                     >
-                        <span class="department-code">
-                            BDMS
-                        </span>
-
-                        <span class="department-name">
-                            Block Decision Desk
-                        </span>
+                        Sign in to Control Desk
                     </button>
 
+                </form>
+
+
+                <div class="login-footer">
+                    <span class="status-dot"></span>
+                    Planning engine ready
+                    <span class="footer-divider"></span>
+                    VisionXpress Operations
                 </div>
-
-
-                <!-- User ID -->
-
-                <div class="login-field">
-
-                    <label for="login-user">
-                        User ID
-                    </label>
-
-                    <input
-                        id="login-user"
-                        type="text"
-                        placeholder="Enter user ID"
-                        autocomplete="username"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Password -->
-
-                <div class="login-field">
-
-                    <label for="login-password">
-                        Password
-                    </label>
-
-                    <input
-                        id="login-password"
-                        type="password"
-                        placeholder="Enter password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                </div>
-
-
-                <button
-                    id="login-submit"
-                    type="submit"
-                    class="login-submit"
-                >
-                    Sign in to Control Desk
-                </button>
-
-            </form>
-
-
-            <div class="login-footer">
-
-                <span class="status-dot"></span>
-
-                Planning engine ready
-
-                <span class="footer-divider"></span>
-
-                VisionXpress Operations
 
             </div>
 
@@ -730,8 +1609,14 @@
 
                 });
 
-            if (button) {
-                button.classList.add(
+            const targetBtn =
+                button ||
+                document.querySelector(
+                    `.department-button[data-department="${department}"]`
+                );
+
+            if (targetBtn) {
+                targetBtn.classList.add(
                     "active"
                 );
             }

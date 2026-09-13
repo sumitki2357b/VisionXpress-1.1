@@ -217,15 +217,212 @@ function initials(text) {
    VIEW MANAGEMENT
    ========================================================= */
 
+function showLanding() {
+
+    const landing =
+        document.getElementById(
+            "landing-view"
+        );
+
+    const login =
+        document.getElementById(
+            "login-view"
+        );
+
+    const app =
+        document.getElementById(
+            "app-view"
+        );
+
+    const pubHeader =
+        document.getElementById(
+            "public-header"
+        );
+
+    const ctaBtn =
+        document.getElementById(
+            "public-cta-btn"
+        );
+
+    if (landing) {
+        landing.classList.remove(
+            "hidden"
+        );
+    }
+
+    if (login) {
+        login.classList.add(
+            "hidden"
+        );
+    }
+
+    if (app) {
+        app.classList.add(
+            "hidden"
+        );
+    }
+
+    if (pubHeader) {
+        pubHeader.classList.remove(
+            "hidden"
+        );
+
+        pubHeader.classList.remove(
+            "in-login-mode"
+        );
+    }
+
+    if (ctaBtn) {
+        ctaBtn.textContent =
+            "Open Control Centre →";
+
+        ctaBtn.onclick =
+            function () {
+                showLogin();
+            };
+    }
+
+    window.scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        }
+    );
+}
+
+
+function showLogin(
+    department
+) {
+
+    const landing =
+        document.getElementById(
+            "landing-view"
+        );
+
+    const login =
+        document.getElementById(
+            "login-view"
+        );
+
+    const app =
+        document.getElementById(
+            "app-view"
+        );
+
+    const pubHeader =
+        document.getElementById(
+            "public-header"
+        );
+
+    const ctaBtn =
+        document.getElementById(
+            "public-cta-btn"
+        );
+
+    if (landing) {
+        landing.classList.add(
+            "hidden"
+        );
+    }
+
+    if (login) {
+        login.classList.remove(
+            "hidden"
+        );
+    }
+
+    if (app) {
+        app.classList.add(
+            "hidden"
+        );
+    }
+
+    if (pubHeader) {
+        pubHeader.classList.remove(
+            "hidden"
+        );
+
+        pubHeader.classList.add(
+            "in-login-mode"
+        );
+    }
+
+    if (ctaBtn) {
+        ctaBtn.textContent =
+            "← Back to Portal";
+
+        ctaBtn.onclick =
+            function () {
+                showLanding();
+            };
+    }
+
+    if (
+        department &&
+        typeof selectVisionXpressDepartment ===
+            "function"
+    ) {
+
+        selectVisionXpressDepartment(
+            department
+        );
+    }
+
+    window.scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        }
+    );
+}
+
+
 function showApp() {
 
-    $("#login-view")
-        .classList
-        .add("hidden");
+    const landing =
+        document.getElementById(
+            "landing-view"
+        );
 
-    $("#app-view")
-        .classList
-        .remove("hidden");
+    const login =
+        document.getElementById(
+            "login-view"
+        );
+
+    const app =
+        document.getElementById(
+            "app-view"
+        );
+
+    const pubHeader =
+        document.getElementById(
+            "public-header"
+        );
+
+    if (landing) {
+        landing.classList.add(
+            "hidden"
+        );
+    }
+
+    if (login) {
+        login.classList.add(
+            "hidden"
+        );
+    }
+
+    if (pubHeader) {
+        pubHeader.classList.add(
+            "hidden"
+        );
+    }
+
+    if (app) {
+        app.classList.remove(
+            "hidden"
+        );
+    }
 
     $("#user-name")
         .textContent =
@@ -250,18 +447,6 @@ function showApp() {
     renderPage();
 
     refreshNotifications();
-}
-
-
-function showLogin() {
-
-    $("#app-view")
-        .classList
-        .add("hidden");
-
-    $("#login-view")
-        .classList
-        .remove("hidden");
 }
 
 
@@ -292,7 +477,7 @@ function logout(
         "vx_user"
     );
 
-    showLogin();
+    showLanding();
 }
 
 
@@ -3911,7 +4096,7 @@ async function renderNotifications() {
                                     <div
                                         style="
                                             margin-top:8px;
-                                            color:#445f70;
+                                            color:var(--vx-muted);
                                             font-size:12px;
                                             line-height:1.5;
                                         "
@@ -4516,18 +4701,24 @@ if (
         )
         .catch(
             () =>
-                showLogin()
+                showLanding()
         );
 
 } else {
 
-    showLogin();
+    showLanding();
 }
 
 
 /* =========================================================
    GLOBAL FUNCTIONS
    ========================================================= */
+
+window.showLanding =
+    showLanding;
+
+window.showLogin =
+    showLogin;
 
 window.go =
     go;
@@ -4624,33 +4815,50 @@ window.downloadCOATemplate =
    ========================================================= */
 
 (function initVisionXpressModeButton() {
-    const modeButton = document.getElementById("mode-button");
-    if (!modeButton) return;
-
     const storageKey = "vx_display_mode";
 
     function applyMode(mode) {
         const dark = mode === "dark";
         document.body.classList.toggle("dark-mode", dark);
-        modeButton.textContent = dark ? "Light" : "Mode";
-        modeButton.setAttribute(
-            "aria-label",
-            dark ? "Switch to light mode" : "Switch to dark mode"
-        );
-        modeButton.title = dark
-            ? "Switch to light mode"
-            : "Switch to dark mode";
+        const label = dark ? "☀ Light" : "☾ Dark";
+        const aria = dark ? "Switch to light mode" : "Switch to dark mode";
+
+        const modeButton = document.getElementById("mode-button");
+        if (modeButton) {
+            modeButton.textContent = label;
+            modeButton.setAttribute("aria-label", aria);
+            modeButton.title = aria;
+        }
+
+        const publicModeBtn = document.getElementById("public-mode-button");
+        if (publicModeBtn) {
+            publicModeBtn.textContent = label;
+            publicModeBtn.setAttribute("aria-label", aria);
+            publicModeBtn.title = aria;
+        }
     }
 
     const savedMode = localStorage.getItem(storageKey) || "light";
     applyMode(savedMode);
 
-    modeButton.addEventListener("click", function () {
+    function toggleMode() {
         const nextMode = document.body.classList.contains("dark-mode")
             ? "light"
             : "dark";
 
         localStorage.setItem(storageKey, nextMode);
         applyMode(nextMode);
-    });
+    }
+
+    const modeButton = document.getElementById("mode-button");
+    if (modeButton) {
+        modeButton.addEventListener("click", toggleMode);
+    }
+
+    const publicModeBtn = document.getElementById("public-mode-button");
+    if (publicModeBtn) {
+        publicModeBtn.addEventListener("click", toggleMode);
+    }
+
+    window.toggleVisionXpressMode = toggleMode;
 })();
